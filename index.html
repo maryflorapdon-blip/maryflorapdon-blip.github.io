@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GÁPÔ: Interaktibong Kagamitan sa Pagtuturo at Pagkatuto</title>
+    <style>
+        /* CSS Variables at Base Styling */
+        :root {
+            --primary-dark: #0f172a;
+            --primary-blue: #1e3a8a;
+            --accent-gold: #d97706;
+            --accent-gold-hover: #b45309;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Layout */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            color: #ffffff;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        header h1 span {
+            color: #f59e0b;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 76px;
+            z-index: 99;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            padding: 0.5rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-blue);
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1000px;
+            width: 100%;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Section Styling */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Common Buttons */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Score Tracker & Progress Bar */
+        .score-tracker {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--primary-blue));
+            transition: width 0.3s ease;
+        }
+
+        /* BAHAGI 1: QUIZ STYLES */
+        .question-card {
+            background-color: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            margin-bottom: 1.25rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-item {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .option-item:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-blue);
+            background-color: #eff6ff;
+        }
+
+        .option-item.correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #14532d;
+            font-weight: 600;
+        }
+
+        .option-item.wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #7f1d1d;
+        }
+
+        .explanation-box {
+            margin-top: 0.75rem;
+            padding: 0.8rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-box.correct-bg {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .explanation-box.wrong-bg {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        /* BAHAGI 2: CHARACTER MATCHING */
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .matching-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .matching-item {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .character-name {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .matching-select {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .matching-select:focus {
+            border-color: var(--primary-blue);
+        }
+
+        .feedback-badge {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            display: none;
+            width: fit-content;
+        }
+
+        .feedback-badge.correct {
+            display: inline-block;
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .feedback-badge.wrong {
+            display: inline-block;
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* BAHAGI 3: STORY SEQUENCE */
+        .sequence-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sequence-item {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sequence-content {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex: 1;
+        }
+
+        .sequence-num {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .sequence-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .sequence-actions {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .btn-arrow {
+            background-color: #f1f5f9;
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-arrow:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* BAHAGI 4: FLASHCARDS */
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .flashcard {
+            background-color: transparent;
+            height: 220px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            color: var(--primary-dark);
+        }
+
+        .flashcard-front h3 {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .flashcard-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(145deg, var(--primary-dark), var(--primary-blue));
+            color: #ffffff;
+            transform: rotateY(180deg);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        /* BAHAGI 5: CERTIFICATE */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.65rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+        }
+
+        /* Printable Certificate Frame */
+        #certificate-area {
+            background-color: #ffffff;
+            border: 8px double var(--primary-blue);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            position: relative;
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cert-header h2 {
+            font-family: Georgia, serif;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
+        }
+
+        .cert-header p {
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-body {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--accent-gold);
+            display: inline-block;
+            padding: 0 1.5rem 0.2rem 1.5rem;
+            margin: 0.8rem 0;
+        }
+
+        .cert-details {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-scores-summary {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .cert-score-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+        }
+
+        .cert-score-box strong {
+            color: var(--primary-blue);
+            font-size: 1.05rem;
+            display: block;
+        }
+
+        .cert-footer {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-top: 1rem;
+        }
+
+        .cert-signature {
+            border-top: 1px solid #94a3b8;
+            width: 180px;
+            padding-top: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Message Box Modal */
+        .msg-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .msg-content {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .msg-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .msg-content p {
+            margin-bottom: 1.25rem;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #certificate-area, #certificate-area * {
+                visibility: visible;
+            }
+            #certificate-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: 4px solid var(--primary-dark);
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Responsive Utilities */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .nav-btn { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
+            .card { padding: 1rem; }
+            .cert-header h2 { font-size: 1.4rem; }
+            .cert-name { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>GÁPÔ: <span>Interaktibong Kagamitan</span></h1>
+        <p>Aralin at Pagsusuri sa Nobelang Isinulat ni Lualhati Bautista</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="no-print">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="switchTab('quiz')">📝 Pagsusulit</button>
+            <button class="nav-btn" onclick="switchTab('matching')">👥 Mga Tauhan</button>
+            <button class="nav-btn" onclick="switchTab('sequence')">⏱️ Pagkakasunod-sunod</button>
+            <button class="nav-btn" onclick="switchTab('flashcards')">💡 Tema at Simbolo</button>
+            <button class="nav-btn" onclick="switchTab('certificate')">📜 Katibayan</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+
+        <!-- BAHAGI 1: PAGSUSULIT (QUIZ) -->
+        <section id="tab-quiz" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📝 Pagsusulit sa Pag-unawa (10 Tanong)</h2>
+                    <button class="btn btn-outline" onclick="resetQuiz()">🔄 Ulitin ang Pagsusulit</button>
+                </div>
+
+                <div class="score-tracker">
+                    <span>Marka sa Pagsusulit: <span id="quiz-score-display">0</span> / 10</span>
+                    <span id="quiz-status-text">Sagutan ang mga tanong sa ibaba.</span>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div id="quiz-progress-bar" class="progress-bar"></div>
+                </div>
+
+                <div id="quiz-container">
+                    <!-- Questions will be populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BAHAGI 2: PAGTATAPAT-TAPAT NG TAUHAN -->
+        <section id="tab-matching" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">👥 Pagtatapat-tapat ng Tauhan sa Kanilang Paglalarawan</h2>
+                    <button class="btn btn-outline" onclick="resetMatching()">🔄 Ulitin</button>
+                </div>
+                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
+                    Piliin ang tamang paglalarawan at simbolismo para sa bawat tauhan sa nobelang Gápô.
+                </p>
+
+                <div class="matching-grid" id="matching-container">
+                    <!-- Matching items will be dynamically generated -->
+                </div>
+
+                <div style="margin-top: 1.5rem; text-align: right;">
+                    <button class="btn btn-primary" onclick="checkMatchingAnswers()">Suriin ang mga Sagot</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAHAGI 3: PAGKAKASUNOD-SUNOD NG PANGYAYARI -->
+        <section id="tab-sequence" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⏱️ Pagsusunod-sunod ng mga Pangunahing Pangyayari</h2>
+                    <button class="btn btn-outline" onclick="resetSequence()">🔄 Ulitin</button>
+                </div>
+                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
+                    Ayusin ang 5 pangunahing kaganapan ayon sa wastong kronolohikal na pagkakasunod-sunod sa nobela gamit ang mga arrow button (⬆️ / ⬇️).
+                </p>
+
+                <div class="sequence-list" id="sequence-container">
+                    <!-- Sequence items dynamic -->
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div id="sequence-feedback" style="font-weight: 600; font-size: 0.95rem;"></div>
+                    <button class="btn btn-primary" onclick="checkSequenceOrder()">Suriin ang Pagkakasunod-sunod</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAHAGI 4: FLASHCARDS NG TEMA AT SIMBOLISMO -->
+        <section id="tab-flashcards" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💡 Interaktibong Flashcards ng Tema at Simbolismo</h2>
+                </div>
+                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
+                    I-click o i-tap ang kard upang ipaling (flip) at mabasa ang malalim na paliwanag sa simbolismo o tema.
+                </p>
+
+                <div class="flashcard-grid" id="flashcards-container">
+                    <!-- Flashcards generated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- BAHAGI 5: KATIBAYAN NG PAGKATUTO (CERTIFICATE) -->
+        <section id="tab-certificate" class="tab-content">
+            <div class="card no-print">
+                <div class="card-header">
+                    <h2 class="card-title">📜 Katibayan ng Pagkatuto (Summary & Certificate)</h2>
+                </div>
+                <p style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-muted);">
+                    Ilagay ang iyong impormasyon upang maihanda ang opisyal na katibayan ng iyong pagkatuto sa araling ito.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="student-name">Kumpletong Pangalan ng Mag-aaral:</label>
+                        <input type="text" id="student-name" class="form-control" placeholder="Hal. Juan D. Cruz" oninput="updateCertificateDisplay()">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-section">Baitang at Seksiyon:</label>
+                        <input type="text" id="student-section" class="form-control" placeholder="Hal. Baitang 10 - Rizal" oninput="updateCertificateDisplay()">
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="triggerPrint()">🖨️ I-print ang Katibayan</button>
+                </div>
+            </div>
+
+            <!-- Printable Certificate Container -->
+            <div id="certificate-area">
+                <div class="cert-header">
+                    <h2>Katibayan ng Pagkatuto</h2>
+                    <p>Nobelang "GÁPÔ" ni Lualhati Bautista</p>
+                </div>
+                <div class="cert-body">
+                    Ipinagkakaloob ang katibayang ito kay<br>
+                    <div class="cert-name" id="cert-display-name"> [ Pangalan ng Mag-aaral ] </div><br>
+                    <span id="cert-display-section" style="font-weight: 500; color: var(--text-muted);">[ Baitang at Seksiyon ]</span>
+                </div>
+                <p style="font-size: 0.95rem; margin-bottom: 1rem;">
+                    Dahil sa matagumpay na pagtatapos at pagpapamalas ng mataas na antas ng pag-unawa sa mga gawain tungkol sa paksa, mga tauhan, at panlipunang konteksto ng nobelang Gápô.
+                </p>
+
+                <div class="cert-scores-summary">
+                    <div class="cert-score-box">
+                        Pagsusulit (Quiz)
+                        <strong id="cert-quiz-score">0 / 10</strong>
+                    </div>
+                    <div class="cert-score-box">
+                        Pagtatapat ng Tauhan
+                        <strong id="cert-matching-score">0 / 7</strong>
+                    </div>
+                    <div class="cert-score-box">
+                        Pagkakasunod-sunod
+                        <strong id="cert-sequence-score">0 / 5</strong>
+                    </div>
+                    <div class="cert-score-box" style="background-color: #fef3c7; border-color: #fde68a;">
+                        Kabuoang Marka
+                        <strong id="cert-total-percent" style="color: var(--accent-gold);">0%</strong>
+                    </div>
+                </div>
+
+                <div class="cert-details">
+                    Petsa ng Pagtawid: <span id="cert-date">--/--/----</span>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="cert-signature">
+                        Nilagdaan ng Mag-aaral
+                    </div>
+                    <div class="cert-signature">
+                        Guro sa Filipino
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Message Box (Panghalili sa Alert) -->
+    <div id="msg-modal" class="msg-modal">
+        <div class="msg-content">
+            <h3 id="msg-title">Paalala</h3>
+            <p id="msg-body">Mensahe...</p>
+            <button class="btn btn-primary" onclick="closeModal()">Isara</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* ==========================================================================
+           DATA DEFINITIONS
+           ========================================================================== */
+
+        // 1. Quiz Data (10 Questions)
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "Sino ang pangunahing tauhan sa nobela na isang Amerasian na musikero sa Freedom Pad at may matinding poot sa kanyang amang Amerikano?",
+                options: ["Modesto", "Michael Taylor Jr.", "Steve", "Ali"],
+                correct: 1,
+                explanation: "Si Michael Taylor Jr. (Mike) ang pangunahing tauhan. Siya ay anak ng isang Amerikanong sundalo na nang-iwan at ng isang Pilipinang inabandona, kaya't taglay niya ang matinding krisis sa identidad at galit sa imperyalismong Amerikano."
+            },
+            {
+                id: 2,
+                question: "Anong pangunahing tagpuan sa nobela ang nagpapakita ng labis na impluwensya ng base militar ng Estados Unidos sa ekonomiya at kultura ng lungsod?",
+                options: ["Olongapo", "Maynila", "Cebu", "Angeles City"],
+                correct: 0,
+                explanation: "Ang Olongapo ang pangunahing tagpuan ng nobela kung saan matatagpuan ang Subic Naval Base. Dito umiikot ang komersyalisasyon at buhay ng mga tauhan."
+            },
+            {
+                id: 3,
+                question: "Sino ang Pilipinong manggagawa sa base militar na patuloy na nagtitiis sa pamamahiya ng mga Amerikanong sundalo upang mapag-aral ang anak?",
+                options: ["Ali", "William Smith", "Modesto", "Sam"],
+                correct: 2,
+                explanation: "Si Modesto ay isang Pilipinong manggagawa sa base militar na nakararanas ng matinding diskriminasyon ngunit nagtitimpi para sa kanyang pamilya."
+            },
+            {
+                id: 4,
+                question: "Ano ang isinasagisag ng klab na 'Freedom Pad' sa nobela?",
+                options: [
+                    "Tunay na kalayaan at kasarinlan ng mga Pilipino",
+                    "Komersyalisasyon ng aliw at pagbebenta ng sariling kultura at katawan sa mga dayuhan",
+                    "Pook ng modernong edukasyon sa kabataan",
+                    "Sentro ng pamahalaan sa Olongapo"
+                ],
+                correct: 1,
+                explanation: "Ang 'Freedom Pad' ay ironikong ipinangalan. Sa halip na tunay na kalayaan, sumisimbolo ito sa pagiging alipin ng mga Pilipino sa dolyar at pagnanasa ng mga dayuhan."
+            },
+            {
+                id: 5,
+                question: "Sino ang babaeng nagtatrabaho bilang GRO na nangarap na makapunta sa Amerika ngunit inabandona at nabuntis ng sundalong si Steve?",
+                options: ["Dolores", "Magda (Magdalena)", "Rosa", "Ligaya"],
+                correct: 1,
+                explanation: "Si Magda (Magdalena) ang kumakatawan sa maraming kababaihang Pilipina na naging biktima ng maling pangarap (American Dream) at eksploytasyon ng mga sundalong Amerikano."
+            },
+            {
+                id: 6,
+                question: "Ano ang nangyari kay Ali (Richard William) na nagpakita ng pagsasamantala sa kanyang katauhan at kayamanan?",
+                options: [
+                    "Siya ay naging opisyal sa base militar.",
+                    "Siya ay niloko, brutal na binugbog, at pinagnakawan ng kanyang kasintahang Amerikano at kasabwat nito.",
+                    "Pumunta siya sa Amerika upang mag-aral.",
+                    "Ibinenta niya ang Freedom Pad."
+                ],
+                correct: 1,
+                explanation: "Si Ali na isang mayaman at bukas-palad na bakla ay naging biktima ng karahasan at pagnanakaw ng kanyang Amerikanong kasintahan na si Johnson at kasabwat nito."
+            },
+            {
+                id: 7,
+                question: "Ano ang trahedyang sumapit kay Modesto sa loob ng base militar?",
+                options: [
+                    "Namatay siya sa aksidente sa sasakyan.",
+                    "Nang lumaban siya sa pangaalipusta ng Kano, pinagtulungan siyang bugbugin at patayin ng mga Amerikanong sundalo.",
+                    "Sinisante siya sa trabaho nang walang dahilan.",
+                    "Umuwi siya sa kanyang lalawigan."
+                ],
+                correct: 1,
+                explanation: "Matapos mapuno sa patuloy na pamamahiya, lumaban si Modesto ngunit brutal siyang pinatay ng mga sundalong Amerikano habang pinapanood lamang ng ibang sundalo."
+            },
+            {
+                id: 8,
+                question: "Ano ang naging sukdulan ng galit ni Michael Taylor Jr. na nagtulak sa kanya na humampas ng gitara kay Steve?",
+                options: [
+                    "Nang ayaw siyang pasahurin sa klab.",
+                    "Nang bastusin at bastos na laitin ni Steve ang alaala ni Modesto at ang pagtrato kay Magda.",
+                    "Nang sirain ni Steve ang kanyang gitara.",
+                    "Nang hilingin ni Steve na umalis siya sa Olongapo."
+                ],
+                correct: 1,
+                explanation: "Hindi na nakapagtimpi si Mike nang insultuhin ni Steve si Modesto at tratuhin na parang basahan si Magda, kaya pinalo niya ito ng gitara sa mukha na naging dahilan ng kanyang pagkakakulong."
+            },
+            {
+                id: 9,
+                question: "Sino ang ina ni Michael Taylor Jr. na nakaranas din ng pangaabandona ng isang Amerikanong sundalo noon?",
+                options: ["Magda", "Dolores", "Irene", "Tessie"],
+                correct: 1,
+                explanation: "Si Dolores ang ina ni Mike. Nagtrabaho rin siya sa klab at naakit ng Amerikanong si Michael Taylor Sr., na umalis at nag-iwan sa kanya nang mabuntis."
+            },
+            {
+                id: 10,
+                question: "Ano ang pangunahing pambansang mensahe at tema ng nobelang Gápô ni Lualhati Bautista?",
+                options: [
+                    "Ang pagtanggap na mas dakila ang kulturang Amerikano.",
+                    "Ang paggising sa pambansang kamalayan at paglaban sa neocolonialism, imperyalismo, at kawalan ng katarungan.",
+                    "Ang mabilis na pagyaman sa pamamagitan ng pagtatrabaho sa base militar.",
+                    "Ang kahalagahan ng pag-alis sa Pilipinas."
+                ],
+                correct: 1,
+                explanation: "Ipinapakita ng Gápô ang tawag sa paggising ng kamalayan at nasyonalismo laban sa makabagong pananakop at hindi pantay na pagtrato sa mga Pilipino sa sarili nilang bayan."
+            }
+        ];
+
+        // 2. Character Matching Data (7 Characters)
+        const charactersData = [
+            { id: "mike", name: "Michael Taylor Jr.", descId: "d1" },
+            { id: "modesto", name: "Modesto", descId: "d2" },
+            { id: "magda", name: "Magda (Magdalena)", descId: "d3" },
+            { id: "ali", name: "Ali (Richard William)", descId: "d4" },
+            { id: "steve", name: "Steve Taylor", descId: "d5" },
+            { id: "johnson", name: "Johnson", descId: "d6" },
+            { id: "dolores", name: "Dolores", descId: "d7" }
+        ];
+
+        const characterDescriptions = [
+            { id: "d1", text: "Isang Amerasian na musikero sa Freedom Pad; may matinding krisis sa identidad at poot sa imperyalismong Amerikano." },
+            { id: "d2", text: "Manggagawang Pilipino sa base militar na tinitiis ang pangaalipusta ngunit namatay nang ipaglaban ang kanyang dangal." },
+            { id: "d3", text: "Isang GRO sa Olongapo na umaasang makakapangasawa ng Amerikano ngunit nabuntis at iniwan ni Steve." },
+            { id: "d4", text: "Isang mayaman at bukas-palad na homosexual na naging biktima ng pagnanakaw at brutal na pagbugbog." },
+            { id: "d5", text: "Amerikanong sundalo na naging kasintahan ni Magda at nagpakita ng panliliit sa mga Pilipino." },
+            { id: "d6", text: "Amerikanong sundalo na nagnakaw at brutal na humagupit kay Ali sa tulong ng kasabwat." },
+            { id: "d7", text: "Ina ni Mike na dating nagtrabaho sa klab, nabuntis at inabandona ng Amerikanong si Michael Taylor Sr." }
+        ];
+
+        // 3. Timeline Ordering Data (5 Events)
+        const timelineEventsMaster = [
+            { id: 1, text: "Pamumuhay ni Mike bilang musikero sa Freedom Pad at ang kanyang pakikipagkaibigan kay Modesto at Ali." },
+            { id: 2, text: "Ang panloloko, pagnanakaw, at brutal na pagbugbog kay Ali ng kasintahang Amerikano na si Johnson." },
+            { id: 3, text: "Ang patuloy na pag-alipusta kay Modesto sa base militar hanggang sa lumaban ito at paslangin ng mga Kano." },
+            { id: 4, text: "Ang pag-iwan ni Steve kay Magda nang malalamang ito ay buntis habang nagpapakita ng kawalan ng galang sa mga Pilipino." },
+            { id: 5, text: "Ang marahas na paghampas ni Mike ng gitara kay Steve na naging dahilan ng kanyang pagkakakulong at paggising ng kamalayan." }
+        ];
+
+        // 4. Flashcards Data (6 Flashcards)
+        const flashcardData = [
+            {
+                title: "Freedom Pad",
+                concept: "Komersyalisasyon at Pagsasamantala",
+                backText: "Isang klab sa Olongapo na nagsisilbing tambayan ng mga sundalong Amerikano. Sumisimbolo sa komersyalisasyon ng aliw at pagbebenta ng sariling kultura at katawan ng mga Pilipino para sa dolyar."
+            },
+            {
+                title: "Base Militar sa Subic",
+                concept: "Neokolonyalismo",
+                backText: "Sumisimbolo sa kawalan ng tunay na kasarinlan at soberanya ng Pilipinas matapos ang Ikalawang Digmaang Pandaigdig. Dito malinaw na makikita ang hindi pantay na pagtrato at kawalan ng katarungan sa mga Pilipino sa sarili nilang bayan."
+            },
+            {
+                title: "Kulay ng Balat / Pagiging Amerasian",
+                concept: "Krisis sa Identidad",
+                backText: "Inilalarawan sa katauhan ni Mike at ng iba pang batang isinilang sa Amerikanong sundalo at Pilipinang ina. Ipinapakita nito ang sugat ng pananakop, pagiging 'anak ng labas' sa sariling bansa, at ang paghahanap ng tunay na pagkakakilanlan."
+            },
+            {
+                title: "Manggagawang Pilipino",
+                concept: "Diskriminasyon at Pangaalipusta",
+                backText: "Inilalarawan sa buhay ni Modesto sa loob ng base militar. Sa kabila ng husay at sipag ng mga Pilipino, itinuturing pa rin silang mababang uri ng mamamayan at walang karapatang lumaban sa mga banyagang superior."
+            },
+            {
+                title: "Kababaihan at GRO",
+                concept: "Eksploytasyon at Maling Pangarap",
+                backText: "Inilalarawan sa buhay ni Magda. Ipinapakita nito ang maling paniniwala na ang pakikipag-isang dibdib sa Amerikano ang tanging susi sa pag-ahon sa kahirapan, na madalas ay nagwawakas sa pag-abandona at pagdurusa."
+            },
+            {
+                title: "Paggising at Nasyonalismo",
+                concept: "Pagbangon at Karangalan",
+                backText: "Ipinakita sa wakas ng nobela sa pamamagitan ng marahas ngunit makabuluhang pagsuway ni Mike kay Steve. Sumisimbolo ito sa pagputol sa tanikala ng pagpapasailalim at pagtanggap sa sariling pagka-Pilipino."
+            }
+        ];
+
+        /* ==========================================================================
+           STATE MANAGEMENT
+           ========================================================================== */
+        let userQuizAnswers = {};
+        let currentSequenceOrder = [];
+
+        /* ==========================================================================
+           INITIALIZATION & NAVIGATION
+           ========================================================================== */
+        window.onload = function() {
+            renderQuiz();
+            renderMatching();
+            initSequence();
+            renderFlashcards();
+            updateCertificateDisplay();
+            setTodayDate();
+        };
+
+        function switchTab(tabId) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Deactivate nav buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById('tab-' + tabId).classList.add('active');
+
+            // Find matching nav button
+            const activeBtn = Array.from(navBtns).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Refresh certificate display when switching to certificate tab
+            if(tabId === 'certificate') {
+                updateCertificateDisplay();
+            }
+        }
+
+        function showModal(title, message) {
+            document.getElementById('msg-title').innerText = title;
+            document.getElementById('msg-body').innerText = message;
+            document.getElementById('msg-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('msg-modal').style.display = 'none';
+        }
+
+        /* ==========================================================================
+           1. QUIZ FUNCTIONS
+           ========================================================================== */
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const qCard = document.createElement('div');
+                qCard.className = 'question-card';
+                qCard.id = `q-card-${q.id}`;
+
+                let optionsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <li class="option-item" id="opt-${q.id}-${optIdx}" onclick="selectQuizOption(${q.id}, ${optIdx})">
+                            <span style="font-weight:bold; min-width: 20px;">${String.fromCharCode(65 + optIdx)}.</span>
+                            <span>${opt}</span>
+                        </li>
+                    `;
+                });
+
+                qCard.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.question}</div>
+                    <ul class="options-list">
+                        ${optionsHtml}
+                    </ul>
+                    <div class="explanation-box" id="exp-${q.id}">
+                        <strong>Paliwanag:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                container.appendChild(qCard);
+            });
+        }
+
+        function selectQuizOption(questionId, optionIndex) {
+            const question = quizQuestions.find(q => q.id === questionId);
+            if (!question) return;
+
+            // Save user answer
+            userQuizAnswers[questionId] = optionIndex;
+
+            // Highlight chosen option and evaluate immediately
+            const totalOptions = question.options.length;
+            for (let i = 0; i < totalOptions; i++) {
+                const optElement = document.getElementById(`opt-${questionId}-${i}`);
+                optElement.className = 'option-item'; // Reset classes
+
+                if (i === question.correct) {
+                    optElement.classList.add('correct');
+                }
+                if (i === optionIndex && optionIndex !== question.correct) {
+                    optElement.classList.add('wrong');
+                }
+            }
+
+            // Show Explanation Box
+            const expBox = document.getElementById(`exp-${questionId}`);
+            expBox.classList.add('show');
+            if (optionIndex === question.correct) {
+                expBox.className = 'explanation-box show correct-bg';
+            } else {
+                expBox.className = 'explanation-box show wrong-bg';
+            }
+
+            updateQuizScore();
+        }
+
+        function updateQuizScore() {
+            let correctCount = 0;
+            let answeredCount = 0;
+
+            quizQuestions.forEach(q => {
+                if (userQuizAnswers.hasOwnProperty(q.id)) {
+                    answeredCount++;
+                    if (userQuizAnswers[q.id] === q.correct) {
+                        correctCount++;
+                    }
+                }
+            });
+
+            document.getElementById('quiz-score-display').innerText = correctCount;
+            const progressPercent = (answeredCount / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = progressPercent + '%';
+
+            if (answeredCount === quizQuestions.length) {
+                document.getElementById('quiz-status-text').innerText = `Natapos na! Ang iyong marka ay ${correctCount}/10.`;
+            } else {
+                document.getElementById('quiz-status-text').innerText = `Nakasagot: ${answeredCount} / 10`;
+            }
+        }
+
+        function resetQuiz() {
+            userQuizAnswers = {};
+            document.getElementById('quiz-score-display').innerText = '0';
+            document.getElementById('quiz-progress-bar').style.width = '0%';
+            document.getElementById('quiz-status-text').innerText = 'Sagutan ang mga tanong sa ibaba.';
+            renderQuiz();
+        }
+
+        /* ==========================================================================
+           2. CHARACTER MATCHING FUNCTIONS
+           ========================================================================== */
+        function renderMatching() {
+            const container = document.getElementById('matching-container');
+            container.innerHTML = '';
+
+            // Shuffle descriptions for matching challenge
+            const shuffledDescs = [...characterDescriptions].sort(() => Math.random() - 0.5);
+
+            charactersData.forEach(char => {
+                const item = document.createElement('div');
+                item.className = 'matching-item';
+
+                let optionsHtml = `<option value="">-- Piliin ang Paglalarawan --</option>`;
+                shuffledDescs.forEach(desc => {
+                    optionsHtml += `<option value="${desc.id}">${desc.text}</option>`;
+                });
+
+                item.innerHTML = `
+                    <div class="character-name">👤 ${char.name}</div>
+                    <select class="matching-select" id="select-char-${char.id}">
+                        ${optionsHtml}
+                    </select>
+                    <span class="feedback-badge" id="badge-char-${char.id}"></span>
+                `;
+
+                container.appendChild(item);
+            });
+        }
+
+        function checkMatchingAnswers() {
+            let score = 0;
+            charactersData.forEach(char => {
+                const selectElem = document.getElementById(`select-char-${char.id}`);
+                const badgeElem = document.getElementById(`badge-char-${char.id}`);
+                const selectedValue = selectElem.value;
+
+                if (selectedValue === char.descId) {
+                    score++;
+                    badgeElem.innerText = "✓ Tama";
+                    badgeElem.className = "feedback-badge correct";
+                } else {
+                    badgeElem.innerText = "✗ Mali";
+                    badgeElem.className = "feedback-badge wrong";
+                }
+            });
+
+            showModal("Resulta sa Pagtatapat-tapat", `Nakuha mo ang markang ${score} / ${charactersData.length} sa gawaing ito!`);
+            updateCertificateDisplay();
+        }
+
+        function getMatchingScore() {
+            let score = 0;
+            charactersData.forEach(char => {
+                const selectElem = document.getElementById(`select-char-${char.id}`);
+                if (selectElem && selectElem.value === char.descId) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        function resetMatching() {
+            renderMatching();
+        }
+
+        /* ==========================================================================
+           3. STORY SEQUENCE FUNCTIONS
+           ========================================================================== */
+        function initSequence() {
+            // Scramble initial order
+            currentSequenceOrder = [...timelineEventsMaster].sort(() => Math.random() - 0.5);
+            renderSequence();
+            document.getElementById('sequence-feedback').innerText = '';
+        }
+
+        function renderSequence() {
+            const container = document.getElementById('sequence-container');
+            container.innerHTML = '';
+
+            currentSequenceOrder.forEach((evt, idx) => {
+                const seqItem = document.createElement('div');
+                seqItem.className = 'sequence-item';
+
+                seqItem.innerHTML = `
+                    <div class="sequence-content">
+                        <div class="sequence-num">${idx + 1}</div>
+                        <div class="sequence-text">${evt.text}</div>
+                    </div>
+                    <div class="sequence-actions">
+                        <button class="btn-arrow" onclick="moveSequence(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>⬆️</button>
+                        <button class="btn-arrow" onclick="moveSequence(${idx}, 1)" ${idx === currentSequenceOrder.length - 1 ? 'disabled' : ''}>⬇️</button>
+                    </div>
+                `;
+
+                container.appendChild(seqItem);
+            });
+        }
+
+        function moveSequence(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= currentSequenceOrder.length) return;
+
+            // Swap
+            const temp = currentSequenceOrder[index];
+            currentSequenceOrder[index] = currentSequenceOrder[newIndex];
+            currentSequenceOrder[newIndex] = temp;
+
+            renderSequence();
+        }
+
+        function checkSequenceOrder() {
+            let isCorrect = true;
+            let correctPositions = 0;
+
+            currentSequenceOrder.forEach((evt, idx) => {
+                if (evt.id === idx + 1) {
+                    correctPositions++;
+                } else {
+                    isCorrect = false;
+                }
+            });
+
+            const feedbackElem = document.getElementById('sequence-feedback');
+            if (isCorrect) {
+                feedbackElem.style.color = "var(--success-color)";
+                feedbackElem.innerText = "🎉 Tamang-tama! Wastong naisaayos ang lahat ng pangyayari (5/5).";
+            } else {
+                feedbackElem.style.color = "var(--error-color)";
+                feedbackElem.innerText = `May ilang mali sa pagkakasunod-sunod. Wastong posisyon: ${correctPositions} / 5. Subukan muli!`;
+            }
+
+            updateCertificateDisplay();
+        }
+
+        function getSequenceScore() {
+            let score = 0;
+            currentSequenceOrder.forEach((evt, idx) => {
+                if (evt.id === idx + 1) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        function resetSequence() {
+            initSequence();
+        }
+
+        /* ==========================================================================
+           4. FLASHCARDS FUNCTIONS
+           ========================================================================== */
+        function renderFlashcards() {
+            const container = document.getElementById('flashcards-container');
+            container.innerHTML = '';
+
+            flashcardData.forEach((fc) => {
+                const card = document.createElement('div');
+                card.className = 'flashcard';
+                card.onclick = function() {
+                    this.classList.toggle('flipped');
+                };
+
+                card.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3>${fc.title}</h3>
+                            <p style="font-weight: 600; color: var(--accent-gold); font-size: 0.9rem;">${fc.concept}</p>
+                            <span class="flashcard-hint">(I-click upang pakinggan/ipaling)</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <strong style="margin-bottom:0.4rem; display:block; color:#fde047;">Paliwanag at Simbolismo:</strong>
+                            <p>${fc.backText}</p>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        /* ==========================================================================
+           5. CERTIFICATE & SUMMARY FUNCTIONS
+           ========================================================================== */
+        function updateCertificateDisplay() {
+            // Student Info
+            const nameInput = document.getElementById('student-name').value.trim();
+            const sectionInput = document.getElementById('student-section').value.trim();
+
+            document.getElementById('cert-display-name').innerText = nameInput !== '' ? nameInput : '[ Pangalan ng Mag-aaral ]';
+            document.getElementById('cert-display-section').innerText = sectionInput !== '' ? sectionInput : '[ Baitang at Seksiyon ]';
+
+            // Calculate Scores
+            let quizScore = 0;
+            quizQuestions.forEach(q => {
+                if (userQuizAnswers[q.id] === q.correct) quizScore++;
+            });
+
+            const matchingScore = getMatchingScore();
+            const sequenceScore = getSequenceScore();
+
+            const totalScore = quizScore + matchingScore + sequenceScore;
+            const maxTotal = 10 + 7 + 5; // 22 total points
+            const percentage = Math.round((totalScore / maxTotal) * 100);
+
+            document.getElementById('cert-quiz-score').innerText = `${quizScore} / 10`;
+            document.getElementById('cert-matching-score').innerText = `${matchingScore} / 7`;
+            document.getElementById('cert-sequence-score').innerText = `${sequenceScore} / 5`;
+            document.getElementById('cert-total-percent').innerText = `${percentage}%`;
+        }
+
+        function setTodayDate() {
+            const today = new Date();
+            const formatted = today.toLocaleDateString('tl-PH', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('cert-date').innerText = formatted;
+        }
+
+        function triggerPrint() {
+            const name = document.getElementById('student-name').value.trim();
+            if(!name) {
+                showModal("Paalala", "Pakiusap, ilagay muna ang iyong kumpletong pangalan bago i-print ang katibayan.");
+                return;
+            }
+            window.print();
+        }
+    </script>
+</body>
+</html>
