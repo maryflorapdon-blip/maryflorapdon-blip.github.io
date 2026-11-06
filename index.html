@@ -1,1450 +1,850 @@
 <!DOCTYPE html>
-<html lang="tl">
+<html lang="tl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GÁPÔ: Interaktibong Gawain ni Mary Flor</title>
+    <title>Filipino 9 - Calbayog City National High School</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        depedBlue: {
+                            50: '#f0f7ff',
+                            100: '#e0f2fe',
+                            500: '#3b82f6',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#004085',
+                        },
+                        depedGold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* CSS Variables at Base Styling */
-        :root {
-            --primary-dark: #0f172a;
-            --primary-blue: #1e3a8a;
-            --accent-gold: #d97706;
-            --accent-gold-hover: #b45309;
-            --bg-light: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --success-color: #16a34a;
-            --error-color: #dc2626;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --radius-md: 8px;
-            --radius-lg: 12px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Header Layout */
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
-            color: #ffffff;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        /* Custom scrollbar for mobile comfort */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 9999px;
         }
 
-        header h1 {
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            color: #ffffff;
-            margin-bottom: 0.25rem;
+        .tab-btn.active {
+            color: #004085;
+            border-bottom-color: #004085;
+            background-color: #e0f2fe;
+            font-weight: 700;
         }
 
-        header h1 span {
-            color: #f59e0b;
-        }
-
-        header p {
-            font-size: 0.95rem;
-            color: #cbd5e1;
-        }
-
-        /* Navigation Bar */
-        nav {
-            background-color: #ffffff;
-            border-bottom: 2px solid var(--border-color);
-            position: sticky;
-            top: 76px;
-            z-index: 99;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-            padding: 0.5rem;
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            padding: 0.6rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: var(--radius-md);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .nav-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--primary-blue);
-        }
-
-        .nav-btn.active {
-            background-color: var(--primary-blue);
-            color: #ffffff;
-        }
-
-        /* Main Container */
-        main {
-            max-width: 1000px;
-            width: 100%;
-            margin: 1.5rem auto;
-            padding: 0 1rem;
-            flex: 1;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Card Section Styling */
-        .card {
-            background-color: var(--card-bg);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-md);
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .card-header {
-            margin-bottom: 1.25rem;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 0.75rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Common Buttons */
-        .btn {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: none;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-gold);
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-gold-hover);
-        }
-
-        .btn-secondary {
-            background-color: #64748b;
-            color: #ffffff;
-        }
-
-        .btn-secondary:hover {
-            background-color: #475569;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
-        }
-
-        .btn-outline:hover {
-            background-color: #f1f5f9;
-        }
-
-        /* Score Tracker & Progress Bar */
-        .score-tracker {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--primary-blue);
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 10px;
-            background-color: #e2e8f0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent-gold), var(--primary-blue));
-            transition: width 0.3s ease;
-        }
-
-        /* BAHAGI 1: QUIZ STYLES */
-        .question-card {
-            background-color: #f8fafc;
-            border-radius: var(--radius-md);
-            padding: 1.2rem;
-            margin-bottom: 1.25rem;
-            border-left: 4px solid var(--primary-blue);
-        }
-
-        .question-text {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-        }
-
-        .options-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .option-item {
-            background-color: #ffffff;
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .option-item:hover {
-            background-color: #f1f5f9;
-            border-color: #cbd5e1;
-        }
-
-        .option-item.selected {
-            border-color: var(--primary-blue);
-            background-color: #eff6ff;
-        }
-
-        .option-item.correct {
-            background-color: #dcfce7 !important;
-            border-color: #22c55e !important;
-            color: #14532d;
-            font-weight: 600;
-        }
-
-        .option-item.wrong {
-            background-color: #fee2e2 !important;
-            border-color: #ef4444 !important;
-            color: #7f1d1d;
-        }
-
-        .explanation-box {
-            margin-top: 0.75rem;
-            padding: 0.8rem;
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .explanation-box.show {
-            display: block;
-        }
-
-        .explanation-box.correct-bg {
-            background-color: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-        }
-
-        .explanation-box.wrong-bg {
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
-        }
-
-        /* BAHAGI 2: CHARACTER MATCHING */
-        .matching-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .matching-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .matching-item {
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-
-        .character-name {
-            font-weight: 700;
-            color: var(--primary-blue);
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .matching-select {
-            width: 100%;
-            padding: 0.6rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background-color: #ffffff;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            outline: none;
-        }
-
-        .matching-select:focus {
-            border-color: var(--primary-blue);
-        }
-
-        .feedback-badge {
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            display: none;
-            width: fit-content;
-        }
-
-        .feedback-badge.correct {
-            display: inline-block;
-            background-color: #dcfce7;
-            color: #15803d;
-        }
-
-        .feedback-badge.wrong {
-            display: inline-block;
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
-
-        /* BAHAGI 3: STORY SEQUENCE */
-        .sequence-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .sequence-item {
-            background-color: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 0.8rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .sequence-content {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            flex: 1;
-        }
-
-        .sequence-num {
-            background-color: var(--primary-blue);
-            color: #ffffff;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .sequence-text {
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .sequence-actions {
-            display: flex;
-            gap: 0.3rem;
-        }
-
-        .btn-arrow {
-            background-color: #f1f5f9;
-            border: 1px solid var(--border-color);
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-arrow:hover {
-            background-color: #e2e8f0;
-        }
-
-        /* BAHAGI 4: FLASHCARDS */
-        .flashcard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .flashcard {
-            background-color: transparent;
-            height: 220px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .flashcard-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-        }
-
-        .flashcard.flipped .flashcard-inner {
-            transform: rotateY(180deg);
-        }
-
-        .flashcard-front, .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: var(--radius-lg);
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .flashcard-front {
-            background: linear-gradient(145deg, #ffffff, #f1f5f9);
-            color: var(--primary-dark);
-        }
-
-        .flashcard-front h3 {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .flashcard-hint {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-            font-style: italic;
-        }
-
-        .flashcard-back {
-            background: linear-gradient(145deg, var(--primary-dark), var(--primary-blue));
-            color: #ffffff;
-            transform: rotateY(180deg);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        /* BAHAGI 5: CERTIFICATE */
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            color: var(--text-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.65rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-blue);
-        }
-
-        /* Printable Certificate Frame */
-        #certificate-area {
-            background-color: #ffffff;
-            border: 8px double var(--primary-blue);
-            padding: 2rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            position: relative;
-            margin-top: 1.5rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .cert-header h2 {
-            font-family: Georgia, serif;
-            font-size: 2rem;
-            color: var(--primary-dark);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.2rem;
-        }
-
-        .cert-header p {
-            color: var(--accent-gold);
-            font-weight: bold;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-        }
-
-        .cert-body {
-            font-size: 1.05rem;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-        }
-
-        .cert-name {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--accent-gold);
-            display: inline-block;
-            padding: 0 1.5rem 0.2rem 1.5rem;
-            margin: 0.8rem 0;
-        }
-
-        .cert-details {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .cert-scores-summary {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 1.2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .cert-score-box {
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 0.6rem 1rem;
-            border-radius: var(--radius-md);
-            font-size: 0.88rem;
-        }
-
-        .cert-score-box strong {
-            color: var(--primary-blue);
-            font-size: 1.05rem;
-            display: block;
-        }
-
-        .cert-footer {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            padding-top: 1rem;
-        }
-
-        .cert-signature {
-            border-top: 1px solid #94a3b8;
-            width: 180px;
-            padding-top: 0.4rem;
-            font-size: 0.85rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        /* Message Box Modal */
-        .msg-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .msg-content {
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .msg-content h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
-        }
-
-        .msg-content p {
-            margin-bottom: 1.25rem;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-        }
-
-        /* Print Media Styles */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #certificate-area, #certificate-area * {
-                visibility: visible;
-            }
-            #certificate-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                border: 4px solid var(--primary-dark);
-                box-shadow: none;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-
-        /* Responsive Utilities */
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.4rem; }
-            .nav-btn { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
-            .card { padding: 1rem; }
-            .cert-header h2 { font-size: 1.4rem; }
-            .cert-name { font-size: 1.3rem; }
-        }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between selection:bg-depedBlue-100 selection:text-depedBlue-900">
 
-    <!-- Header Section -->
-    <header>
-        <h1>GÁPÔ: <span>Interaktibong Gawain ni Mary Flor</span></h1>
-        <p>Aralin at Pagsusuri sa Nobelang Isinulat ni Lualhati Bautista</p>
-    </header>
+    <!-- Top Announcement Bar -->
+    <div class="bg-depedBlue-900 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2 shadow-inner">
+        <span class="bg-depedGold-500 text-slate-900 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">DepEd Grade 9</span>
+        <span>Calbayog City National High School • Portal sa Pagkatuto sa Filipino</span>
+    </div>
 
-    <!-- Navigation Tabs -->
-    <nav class="no-print">
-        <div class="nav-container">
-            <button class="nav-btn active" onclick="switchTab('quiz')">📝 Pagsusulit</button>
-            <button class="nav-btn" onclick="switchTab('matching')">👥 Mga Tauhan</button>
-            <button class="nav-btn" onclick="switchTab('sequence')">⏱️ Pagkakasunod-sunod</button>
-            <button class="nav-btn" onclick="switchTab('flashcards')">💡 Tema at Simbolo</button>
-            <button class="nav-btn" onclick="switchTab('certificate')">📜 Katibayan</button>
-        </div>
-    </nav>
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-4xl mx-auto w-full bg-white shadow-xl min-h-screen flex flex-col">
 
-    <!-- Main Content Area -->
-    <main>
-
-        <!-- BAHAGI 1: PAGSUSULIT (QUIZ) -->
-        <section id="tab-quiz" class="tab-content active">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">📝 Pagsusulit sa Pag-unawa (10 Tanong)</h2>
-                    <button class="btn btn-outline" onclick="resetQuiz()">🔄 Ulitin ang Pagsusulit</button>
+        <!-- HEADER BANNER SECTION -->
+        <header class="relative bg-slate-900 overflow-hidden border-b-4 border-depedGold-500">
+            <!-- User requested header banner image -->
+            <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-depedBlue-900 overflow-hidden">
+                <img 
+                    src="Filipino Grade 9 Learning Banner.png" 
+                    alt="Filipino Grade 9 Learning Banner - Calbayog City National High School" 
+                    class="w-full h-full object-cover object-center transition-all duration-500"
+                    onerror="this.onerror=null; this.src='https://placehold.co/1200x500/004085/ffffff?text=FILIPINO+GRADE+9+%7C+Calbayog+City+National+High+School';"
+                />
+            </div>
+            <!-- Dynamic Subtitle Bar -->
+            <div class="bg-gradient-to-r from-depedBlue-900 via-depedBlue-800 to-depedBlue-900 px-4 py-3 text-white flex flex-wrap items-center justify-between gap-2 shadow-md">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-graduation-cap text-depedGold-400 text-lg"></i>
+                    <span class="font-bold text-sm sm:text-base tracking-wide">CALBAYOG CITY NATIONAL HIGH SCHOOL</span>
                 </div>
-
-                <div class="score-tracker">
-                    <span>Marka sa Pagsusulit: <span id="quiz-score-display">0</span> / 10</span>
-                    <span id="quiz-status-text">Sagutan ang mga tanong sa ibaba.</span>
-                </div>
-
-                <div class="progress-bar-container">
-                    <div id="quiz-progress-bar" class="progress-bar"></div>
-                </div>
-
-                <div id="quiz-container">
-                    <!-- Questions will be populated by JS -->
+                <div class="text-xs bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-depedGold-400 font-semibold">
+                    Taong Panuruan 2024–2025
                 </div>
             </div>
-        </section>
+        </header>
 
-        <!-- BAHAGI 2: PAGTATAPAT-TAPAT NG TAUHAN -->
-        <section id="tab-matching" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">👥 Pagtatapat-tapat ng Tauhan sa Kanilang Paglalarawan</h2>
-                    <button class="btn btn-outline" onclick="resetMatching()">🔄 Ulitin</button>
+        <!-- NAVIGATION TABS -->
+        <nav class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
+            <div class="grid grid-cols-3 text-center">
+                <button onclick="switchTab('home')" id="tab-home" class="tab-btn active py-3 sm:py-4 px-2 text-xs sm:text-sm font-semibold text-slate-600 border-b-4 border-transparent hover:text-depedBlue-900 hover:bg-slate-50 transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-house text-base"></i>
+                    <span>Tahanan</span>
+                </button>
+                <button onclick="switchTab('lessons')" id="tab-lessons" class="tab-btn py-3 sm:py-4 px-2 text-xs sm:text-sm font-semibold text-slate-600 border-b-4 border-transparent hover:text-depedBlue-900 hover:bg-slate-50 transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-book-open text-base"></i>
+                    <span>Mga Aralin</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn py-3 sm:py-4 px-2 text-xs sm:text-sm font-semibold text-slate-600 border-b-4 border-transparent hover:text-depedBlue-900 hover:bg-slate-50 transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square text-base"></i>
+                    <span>Pagsusulit</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- CONTENT AREA -->
+        <main class="flex-grow p-4 sm:p-6 md:p-8 bg-slate-50/50">
+
+            <!-- ================= PAGE 1: HOME (TAHANAN) ================= -->
+            <section id="page-home" class="animate-fade-in space-y-6">
+                <!-- Welcome Banner Card -->
+                <div class="bg-gradient-to-br from-depedBlue-900 to-depedBlue-700 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black select-none">
+                        F9
+                    </div>
+                    <div class="relative z-10 space-y-2">
+                        <span class="inline-block px-3 py-1 bg-depedGold-500 text-slate-900 font-bold text-xs rounded-full uppercase tracking-wider">
+                            Maligayang Pagdating!
+                        </span>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                            Filipino Grade 9 Online Learning Hub
+                        </h1>
+                        <p class="text-slate-200 text-xs sm:text-sm leading-relaxed max-w-2xl">
+                            Ang portal na ito ay dinisenyo para sa madaling pag-access ng mga aralin, gabay, at pagsusulit para sa mga mag-aaral ng Calbayog City National High School.
+                        </p>
+                    </div>
                 </div>
-                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
-                    Piliin ang tamang paglalarawan at simbolismo para sa bawat tauhan sa nobelang Gápô.
+
+                <!-- Announcements Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <h2 class="text-lg sm:text-xl font-bold text-depedBlue-900 flex items-center gap-2">
+                            <i class="fa-solid fa-bullhorn text-depedGold-500"></i>
+                            Mga Anunsyo at Paalala
+                        </h2>
+                        <span class="text-xs text-slate-500 font-medium" id="announcement-count"></span>
+                    </div>
+
+                    <!-- Container for Announcements rendered via JS -->
+                    <div id="announcements-container" class="space-y-3">
+                        <!-- Dynamic content loaded via JS -->
+                    </div>
+                </div>
+
+                <!-- Course Quick Info -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <div class="p-3 bg-depedBlue-100 text-depedBlue-900 rounded-lg">
+                            <i class="fa-solid fa-feather-pointed text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Panitikan</h3>
+                            <p class="text-xs text-slate-600 mt-1">Mga tula, maikling kuwento, dula, at sanaysay ng Timog-Silangang Asya.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <div class="p-3 bg-amber-100 text-amber-700 rounded-lg">
+                            <i class="fa-solid fa-language text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Wika at Gramatika</h3>
+                            <p class="text-xs text-slate-600 mt-1">Wastong paggamit ng mga salita, pang-ugnay, at kaalamang gramatikal.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+                        <div class="p-3 bg-emerald-100 text-emerald-700 rounded-lg">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Ligtas at Pribado</h3>
+                            <p class="text-xs text-slate-600 mt-1">Walang kinakailangang login o personal na impormasyon ng mag-aaral.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ================= PAGE 2: MGA ARALIN (LESSONS) ================= -->
+            <section id="page-lessons" class="animate-fade-in space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div>
+                        <h2 class="text-xl font-bold text-depedBlue-900 flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark text-depedBlue-700"></i>
+                            Pumili ng Aralin
+                        </h2>
+                        <p class="text-xs text-slate-500">I-click ang aralin sa ibaba upang mabasa ang layunin at paliwanag.</p>
+                    </div>
+                    <!-- Lesson Selector Dropdown/Buttons -->
+                    <div class="w-full sm:w-auto">
+                        <select id="lesson-select" onchange="loadSelectedLesson(this.value)" class="w-full sm:w-64 bg-slate-50 border border-slate-300 text-slate-800 text-sm font-semibold rounded-lg p-2.5 focus:ring-2 focus:ring-depedBlue-800 focus:outline-none">
+                            <!-- Dynamic Lesson Options rendered by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Lesson Content Display -->
+                <div id="lesson-detail-container" class="space-y-6">
+                    <!-- Loaded dynamically via JavaScript -->
+                </div>
+            </section>
+
+
+            <!-- ================= PAGE 3: PAGSUSULIT (QUIZ) ================= -->
+            <section id="page-quiz" class="animate-fade-in space-y-6 hidden">
+                
+                <!-- Quiz Container -->
+                <div id="quiz-box" class="bg-white rounded-2xl border border-slate-200 shadow-md p-5 sm:p-7 space-y-6">
+                    <!-- Progress Bar & Quiz Header -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs sm:text-sm font-bold text-depedBlue-900">
+                            <span class="flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-question text-depedGold-500"></i>
+                                Interaktibong Pagsusulit
+                            </span>
+                            <span id="quiz-progress-text" class="bg-depedBlue-100 text-depedBlue-900 px-3 py-1 rounded-full">Tanong 1 sa 5</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                            <div id="quiz-progress-bar" class="bg-depedBlue-700 h-2.5 rounded-full transition-all duration-300" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div class="space-y-4">
+                        <h3 id="quiz-question-text" class="text-base sm:text-lg font-bold text-slate-800 leading-snug">
+                            <!-- Question text loaded here -->
+                        </h3>
+
+                        <!-- Choices List -->
+                        <div id="quiz-options-container" class="space-y-2.5">
+                            <!-- Options loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Feedback Box (Shows right after clicking an option) -->
+                    <div id="quiz-feedback-box" class="hidden p-4 rounded-xl border text-sm animate-fade-in space-y-2">
+                        <div id="feedback-badge" class="font-bold flex items-center gap-2"></div>
+                        <p id="feedback-explanation" class="text-slate-700 leading-relaxed text-xs sm:text-sm"></p>
+                    </div>
+
+                    <!-- Quiz Navigation Controls -->
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                        <button id="btn-prev-question" onclick="prevQuestion()" class="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition hidden">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Nakaraang Tanong
+                        </button>
+                        <div class="ml-auto">
+                            <button id="btn-next-question" onclick="nextQuestion()" disabled class="px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-depedBlue-900 hover:bg-depedBlue-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg shadow-sm transition flex items-center gap-2">
+                                <span>Susunod</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Card (Hidden by default until finished) -->
+                <div id="quiz-results-box" class="hidden bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-8 text-center space-y-6 animate-fade-in">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-depedBlue-100 text-depedBlue-900 flex items-center justify-center text-4xl shadow-inner">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-extrabold text-slate-800">Tapos na ang Pagsusulit!</h2>
+                        <p class="text-slate-600 text-sm">Narito ang iyong nakuhang marka:</p>
+                        <div class="text-4xl sm:text-5xl font-black text-depedBlue-900 tracking-tight my-2" id="quiz-final-score">
+                            0 / 5
+                        </div>
+                        <p id="quiz-score-message" class="text-sm font-semibold text-slate-700"></p>
+                    </div>
+
+                    <div id="quiz-review-container" class="text-left space-y-3 pt-4 border-t border-slate-200">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-depedBlue-700"></i>
+                            Pagwawasto at Balik-Aral:
+                        </h3>
+                        <div id="review-list" class="space-y-3 text-xs sm:text-sm"></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="resetQuiz()" class="px-6 py-3 bg-depedGold-500 hover:bg-depedGold-600 text-slate-900 font-bold rounded-xl shadow transition inline-flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-rotate-right"></i>
+                            Ulitin ang Pagsusulit
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER & TEACHER EDIT GUIDE BUTTON -->
+        <footer class="bg-slate-900 text-white text-xs p-6 border-t border-slate-800">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left space-y-1">
+                    <p class="font-bold text-slate-200">Calbayog City National High School - Grade 9 Filipino</p>
+                    <p class="text-slate-400">Walang kinokolektang personal na datos. Libre at open-source para sa paaralan.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openTeacherGuideModal()" class="px-3 py-2 bg-white/10 hover:bg-white/20 text-depedGold-400 border border-depedGold-500/40 rounded-lg font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Gabay sa Pag-edit (Para sa Guro)</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- TEACHER EDIT GUIDE MODAL -->
+    <div id="teacher-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 space-y-5">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-lg font-bold text-depedBlue-900 flex items-center gap-2">
+                    <i class="fa-solid fa-chalkboard-user text-depedGold-500"></i>
+                    Paano I-edit ang nilalaman ng Website
+                </h3>
+                <button onclick="closeTeacherGuideModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold px-2">&times;</button>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                <p>
+                    Ang buong website na ito ay nakapaloob sa <strong>iisang HTML file (`index.html`)</strong>. Maaari mo itong palitan o dagdagan sa pamamagitan ng pag-edit ng JavaScript Code sa loob ng file.
                 </p>
 
-                <div class="matching-grid" id="matching-container">
-                    <!-- Matching items will be dynamically generated -->
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono text-xs space-y-1">
+                    <p class="font-bold text-slate-900">Hakbang sa Pag-edit:</p>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-700">
+                        <li>Buksan ang <code class="bg-amber-100 px-1 rounded text-amber-900">index.html</code> gamit ang Notepad, VS Code, o kahit anong text editor.</li>
+                        <li>Hanapin ang variable na <code class="bg-amber-100 px-1 rounded text-amber-900">const SITE_DATA = { ... }</code> sa ibaba ng script tag.</li>
+                        <li>Palitan ang nilalaman ng <strong>announcements</strong>, <strong>lessons</strong>, o <strong>quiz</strong>.</li>
+                        <li>I-save ang file. Awtomatikong mag-uupdate ang website pag-refresh sa browser!</li>
+                    </ol>
                 </div>
 
-                <div style="margin-top: 1.5rem; text-align: right;">
-                    <button class="btn btn-primary" onclick="checkMatchingAnswers()">Suriin ang mga Sagot</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- BAHAGI 3: PAGKAKASUNOD-SUNOD NG PANGYAYARI -->
-        <section id="tab-sequence" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">⏱️ Pagsusunod-sunod ng mga Pangunahing Pangyayari</h2>
-                    <button class="btn btn-outline" onclick="resetSequence()">🔄 Ulitin</button>
-                </div>
-                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
-                    Ayusin ang 5 pangunahing kaganapan ayon sa wastong kronolohikal na pagkakasunod-sunod sa nobela gamit ang mga arrow button (⬆️ / ⬇️).
-                </p>
-
-                <div class="sequence-list" id="sequence-container">
-                    <!-- Sequence items dynamic -->
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                    <div id="sequence-feedback" style="font-weight: 600; font-size: 0.95rem;"></div>
-                    <button class="btn btn-primary" onclick="checkSequenceOrder()">Suriin ang Pagkakasunod-sunod</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- BAHAGI 4: FLASHCARDS NG TEMA AT SIMBOLISMO -->
-        <section id="tab-flashcards" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">💡 Interaktibong Flashcards ng Tema at Simbolismo</h2>
-                </div>
-                <p style="margin-bottom: 1.25rem; font-size: 0.95rem; color: var(--text-muted);">
-                    I-click o i-tap ang kard upang ipaling (flip) at mabasa ang malalim na paliwanag sa simbolismo o tema.
-                </p>
-
-                <div class="flashcard-grid" id="flashcards-container">
-                    <!-- Flashcards generated dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- BAHAGI 5: KATIBAYAN NG PAGKATUTO (CERTIFICATE) -->
-        <section id="tab-certificate" class="tab-content">
-            <div class="card no-print">
-                <div class="card-header">
-                    <h2 class="card-title">📜 Katibayan ng Pagkatuto (Summary & Certificate)</h2>
-                </div>
-                <p style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-muted);">
-                    Ilagay ang iyong impormasyon upang maihanda ang opisyal na katibayan ng iyong pagkatuto sa araling ito.
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-                    <div class="form-group">
-                        <label for="student-name">Kumpletong Pangalan ng Mag-aaral:</label>
-                        <input type="text" id="student-name" class="form-control" placeholder="Hal. Juan D. Cruz" oninput="updateCertificateDisplay()">
-                    </div>
-                    <div class="form-group">
-                        <label for="student-section">Baitang at Seksiyon:</label>
-                        <input type="text" id="student-section" class="form-control" placeholder="Hal. Baitang 10 - Rizal" oninput="updateCertificateDisplay()">
-                    </div>
-                </div>
-
-                <div style="text-align: right; margin-top: 1rem;">
-                    <button class="btn btn-primary" onclick="triggerPrint()">🖨️ I-print ang Katibayan</button>
+                <div class="bg-blue-50 border-l-4 border-depedBlue-900 p-3 rounded text-depedBlue-900 text-xs">
+                    <strong>Tandaan:</strong> Siguraduhing nasa parehong folder ang <code class="font-bold">Filipino Grade 9 Learning Banner.png</code> para sa responsive header.
                 </div>
             </div>
 
-            <!-- Printable Certificate Container -->
-            <div id="certificate-area">
-                <div class="cert-header">
-                    <h2>Katibayan ng Pagkatuto</h2>
-                    <p>Nobelang "GÁPÔ" ni Lualhati Bautista</p>
-                </div>
-                <div class="cert-body">
-                    Ipinagkakaloob ang katibayang ito kay<br>
-                    <div class="cert-name" id="cert-display-name"> [ Pangalan ng Mag-aaral ] </div><br>
-                    <span id="cert-display-section" style="font-weight: 500; color: var(--text-muted);">[ Baitang at Seksiyon ]</span>
-                </div>
-                <p style="font-size: 0.95rem; margin-bottom: 1rem;">
-                    Dahil sa matagumpay na pagtatapos at pagpapamalas ng mataas na antas ng pag-unawa sa mga gawain tungkol sa paksa, mga tauhan, at panlipunang konteksto ng nobelang Gápô.
-                </p>
-
-                <div class="cert-scores-summary">
-                    <div class="cert-score-box">
-                        Pagsusulit (Quiz)
-                        <strong id="cert-quiz-score">0 / 10</strong>
-                    </div>
-                    <div class="cert-score-box">
-                        Pagtatapat ng Tauhan
-                        <strong id="cert-matching-score">0 / 7</strong>
-                    </div>
-                    <div class="cert-score-box">
-                        Pagkakasunod-sunod
-                        <strong id="cert-sequence-score">0 / 5</strong>
-                    </div>
-                    <div class="cert-score-box" style="background-color: #fef3c7; border-color: #fde68a;">
-                        Kabuoang Marka
-                        <strong id="cert-total-percent" style="color: var(--accent-gold);">0%</strong>
-                    </div>
-                </div>
-
-                <div class="cert-details">
-                    Petsa ng Pagtawid: <span id="cert-date">--/--/----</span>
-                </div>
-
-                <div class="cert-footer">
-                    <div class="cert-signature">
-                        Nilagdaan ng Mag-aaral
-                    </div>
-                    <div class="cert-signature">
-                        Guro sa Filipino
-                    </div>
-                </div>
+            <div class="pt-3 border-t text-right">
+                <button onclick="closeTeacherGuideModal()" class="px-4 py-2 bg-depedBlue-900 text-white font-semibold text-xs sm:text-sm rounded-lg hover:bg-depedBlue-800 transition">
+                    Naintindihan ko
+                </button>
             </div>
-        </section>
-
-    </main>
-
-    <!-- Modal Message Box (Panghalili sa Alert) -->
-    <div id="msg-modal" class="msg-modal">
-        <div class="msg-content">
-            <h3 id="msg-title">Paalala</h3>
-            <p id="msg-body">Mensahe...</p>
-            <button class="btn btn-primary" onclick="closeModal()">Isara</button>
         </div>
     </div>
 
-    <!-- JavaScript Application Logic -->
+
+    <!-- ================= JAVASCRIPT SECTION ================= -->
     <script>
-        /* ==========================================================================
-           DATA DEFINITIONS
-           ========================================================================== */
+        /**
+         * =========================================================================
+         * DATA NG WEBSITE (EASY EDITING FOR TEACHERS / PARA SA GURO)
+         * =========================================================================
+         * Maaaring palitan o dagdagan ang mga datos sa ibaba.
+         */
+        const SITE_DATA = {
+            // 1. MGA ANUNSYO (HOME PAGE)
+            announcements: [
+                {
+                    id: 1,
+                    title: "Maligayang Pagdating sa Unang Kuwarter!",
+                    date: "Nobyembre 2026",
+                    tag: "Pangkalahatan",
+                    urgent: false,
+                    content: "Basahin ang Unang Aralin tungkol sa Tanka at Haiku. Sagutan ang maikling pagsusulit pagkatapos mag-aral."
+                },
+                {
+                    id: 2,
+                    title: "Paghahanda para sa Unang Markahang Pagsusulit",
+                    date: "Nobyembre 2026",
+                    tag: "Paalala",
+                    urgent: true,
+                    content: "Magkakaroon ng interactive review sa susunod na linggo. Siguraduhing natapos ang lahat ng pagsasanay sa portal na ito."
+                }
+            ],
 
-        // 1. Quiz Data (10 Questions)
-        const quizQuestions = [
-            {
-                id: 1,
-                question: "Sino ang pangunahing tauhan sa nobela na isang Amerasian na musikero sa Freedom Pad at may matinding poot sa kanyang amang Amerikano?",
-                options: ["Modesto", "Michael Taylor Jr.", "Steve", "Ali"],
-                correct: 1,
-                explanation: "Si Michael Taylor Jr. (Mike) ang pangunahing tauhan. Siya ay anak ng isang Amerikanong sundalo na nang-iwan at ng isang Pilipinang inabandona, kaya't taglay niya ang matinding krisis sa identidad at galit sa imperyalismong Amerikano."
-            },
-            {
-                id: 2,
-                question: "Anong pangunahing tagpuan sa nobela ang nagpapakita ng labis na impluwensya ng base militar ng Estados Unidos sa ekonomiya at kultura ng lungsod?",
-                options: ["Olongapo", "Maynila", "Cebu", "Angeles City"],
-                correct: 0,
-                explanation: "Ang Olongapo ang pangunahing tagpuan ng nobela kung saan matatagpuan ang Subic Naval Base. Dito umiikot ang komersyalisasyon at buhay ng mga tauhan."
-            },
-            {
-                id: 3,
-                question: "Sino ang Pilipinong manggagawa sa base militar na patuloy na nagtitiis sa pamamahiya ng mga Amerikanong sundalo upang mapag-aral ang anak?",
-                options: ["Ali", "William Smith", "Modesto", "Sam"],
-                correct: 2,
-                explanation: "Si Modesto ay isang Pilipinong manggagawa sa base militar na nakararanas ng matinding diskriminasyon ngunit nagtitimpi para sa kanyang pamilya."
-            },
-            {
-                id: 4,
-                question: "Ano ang isinasagisag ng klab na 'Freedom Pad' sa nobela?",
-                options: [
-                    "Tunay na kalayaan at kasarinlan ng mga Pilipino",
-                    "Komersyalisasyon ng aliw at pagbebenta ng sariling kultura at katawan sa mga dayuhan",
-                    "Pook ng modernong edukasyon sa kabataan",
-                    "Sentro ng pamahalaan sa Olongapo"
-                ],
-                correct: 1,
-                explanation: "Ang 'Freedom Pad' ay ironikong ipinangalan. Sa halip na tunay na kalayaan, sumisimbolo ito sa pagiging alipin ng mga Pilipino sa dolyar at pagnanasa ng mga dayuhan."
-            },
-            {
-                id: 5,
-                question: "Sino ang babaeng nagtatrabaho bilang GRO na nangarap na makapunta sa Amerika ngunit inabandona at nabuntis ng sundalong si Steve?",
-                options: ["Dolores", "Magda (Magdalena)", "Rosa", "Ligaya"],
-                correct: 1,
-                explanation: "Si Magda (Magdalena) ang kumakatawan sa maraming kababaihang Pilipina na naging biktima ng maling pangarap (American Dream) at eksploytasyon ng mga sundalong Amerikano."
-            },
-            {
-                id: 6,
-                question: "Ano ang nangyari kay Ali (Richard William) na nagpakita ng pagsasamantala sa kanyang katauhan at kayamanan?",
-                options: [
-                    "Siya ay naging opisyal sa base militar.",
-                    "Siya ay niloko, brutal na binugbog, at pinagnakawan ng kanyang kasintahang Amerikano at kasabwat nito.",
-                    "Pumunta siya sa Amerika upang mag-aral.",
-                    "Ibinenta niya ang Freedom Pad."
-                ],
-                correct: 1,
-                explanation: "Si Ali na isang mayaman at bukas-palad na bakla ay naging biktima ng karahasan at pagnanakaw ng kanyang Amerikanong kasintahan na si Johnson at kasabwat nito."
-            },
-            {
-                id: 7,
-                question: "Ano ang trahedyang sumapit kay Modesto sa loob ng base militar?",
-                options: [
-                    "Namatay siya sa aksidente sa sasakyan.",
-                    "Nang lumaban siya sa pangaalipusta ng Kano, pinagtulungan siyang bugbugin at patayin ng mga Amerikanong sundalo.",
-                    "Sinisante siya sa trabaho nang walang dahilan.",
-                    "Umuwi siya sa kanyang lalawigan."
-                ],
-                correct: 1,
-                explanation: "Matapos mapuno sa patuloy na pamamahiya, lumaban si Modesto ngunit brutal siyang pinatay ng mga sundalong Amerikano habang pinapanood lamang ng ibang sundalo."
-            },
-            {
-                id: 8,
-                question: "Ano ang naging sukdulan ng galit ni Michael Taylor Jr. na nagtulak sa kanya na humampas ng gitara kay Steve?",
-                options: [
-                    "Nang ayaw siyang pasahurin sa klab.",
-                    "Nang bastusin at bastos na laitin ni Steve ang alaala ni Modesto at ang pagtrato kay Magda.",
-                    "Nang sirain ni Steve ang kanyang gitara.",
-                    "Nang hilingin ni Steve na umalis siya sa Olongapo."
-                ],
-                correct: 1,
-                explanation: "Hindi na nakapagtimpi si Mike nang insultuhin ni Steve si Modesto at tratuhin na parang basahan si Magda, kaya pinalo niya ito ng gitara sa mukha na naging dahilan ng kanyang pagkakakulong."
-            },
-            {
-                id: 9,
-                question: "Sino ang ina ni Michael Taylor Jr. na nakaranas din ng pangaabandona ng isang Amerikanong sundalo noon?",
-                options: ["Magda", "Dolores", "Irene", "Tessie"],
-                correct: 1,
-                explanation: "Si Dolores ang ina ni Mike. Nagtrabaho rin siya sa klab at naakit ng Amerikanong si Michael Taylor Sr., na umalis at nag-iwan sa kanya nang mabuntis."
-            },
-            {
-                id: 10,
-                question: "Ano ang pangunahing pambansang mensahe at tema ng nobelang Gápô ni Lualhati Bautista?",
-                options: [
-                    "Ang pagtanggap na mas dakila ang kulturang Amerikano.",
-                    "Ang paggising sa pambansang kamalayan at paglaban sa neocolonialism, imperyalismo, at kawalan ng katarungan.",
-                    "Ang mabilis na pagyaman sa pamamagitan ng pagtatrabaho sa base militar.",
-                    "Ang kahalagahan ng pag-alis sa Pilipinas."
-                ],
-                correct: 1,
-                explanation: "Ipinapakita ng Gápô ang tawag sa paggising ng kamalayan at nasyonalismo laban sa makabagong pananakop at hindi pantay na pagtrato sa mga Pilipino sa sarili nilang bayan."
-            }
-        ];
+            // 2. MGA ARALIN (LESSONS PAGE)
+            lessons: [
+                {
+                    id: "aralin-1",
+                    title: "Aralin 1: Tanka at Haiku (Panitikan ng Hapon)",
+                    quarter: "Kuwarter 1",
+                    category: "Tula",
+                    objectives: [
+                        "Nasusuri ang pagkakaiba at pagkakatulad ng Tanka at Haiku.",
+                        "Naiuugnay ang damdamin at paksang nakapaloob sa mga tula.",
+                        "Nababait ang wastong bilang ng pantig sa bawat taludtod."
+                    ],
+                    explanation: `
+                        <p class="mb-3">Ang <strong>Tanka</strong> at <strong>Haiku</strong> ay dalawa sa pinakapopular na anyo ng tula mula sa Japan na nagpapahayag ng masidhing damdamin at kaisipan gamit ang kaunting salita lamang.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-depedBlue-900 mb-1"><i class="fa-solid fa-leaf mr-1"></i> Tanka</h4>
+                                <ul class="text-xs sm:text-sm space-y-1 text-slate-700">
+                                    <li>• Buo mula noong ika-8 siglo.</li>
+                                    <li>• May <strong>5 taludtod</strong>.</li>
+                                    <li>• May kabuuang <strong>31 pantig</strong> (5-7-5-7-7).</li>
+                                    <li>• Paksa: Pag-ibig, pagbabago, at damdamin.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+                                <h4 class="font-bold text-amber-900 mb-1"><i class="fa-solid fa-sun mr-1"></i> Haiku</h4>
+                                <ul class="text-xs sm:text-sm space-y-1 text-slate-700">
+                                    <li>• Nabuo noong ika-15 siglo.</li>
+                                    <li>• May <strong>3 taludtod</strong>.</li>
+                                    <li>• May kabuuang <strong>17 pantig</strong> (5-7-5).</li>
+                                    <li>• Paksa: Kalikasan at kasalukuyang sandali.</li>
+                                </ul>
+                            </div>
+                        </div>
 
-        // 2. Character Matching Data (7 Characters)
-        const charactersData = [
-            { id: "mike", name: "Michael Taylor Jr.", descId: "d1" },
-            { id: "modesto", name: "Modesto", descId: "d2" },
-            { id: "magda", name: "Magda (Magdalena)", descId: "d3" },
-            { id: "ali", name: "Ali (Richard William)", descId: "d4" },
-            { id: "steve", name: "Steve Taylor", descId: "d5" },
-            { id: "johnson", name: "Johnson", descId: "d6" },
-            { id: "dolores", name: "Dolores", descId: "d7" }
-        ];
+                        <p class="text-xs sm:text-sm text-slate-600 bg-slate-100 p-3 rounded-lg border-l-4 border-depedBlue-900">
+                            <strong>Halimbawa ng Haiku:</strong><br>
+                            <em>A-raw na pu-la (5) / Sa la-ngit ay su-mi-bit (7) / Ha-ngin ay ma-lamig (5)</em>
+                        </p>
+                    `,
+                    mediaType: "video",
+                    // Placeholder responsive video embed
+                    videoTitle: "Panoorin: Visual Guide sa Tanka at Haiku",
+                    videoEmbedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" // Maaring palitan ng titser ng tamang YouTube Embed link
+                },
+                {
+                    id: "aralin-2",
+                    title: "Aralin 2: Ang Ama (Maikling Kuwento mula sa Timog-Silangang Asya)",
+                    quarter: "Kuwarter 1",
+                    category: "Maikling Kuwento",
+                    objectives: [
+                        "Naiisa-isa ang mga elemento ng maikling kuwento sa akda.",
+                        "Nasusuri ang pagbabago sa karakter ng pangunahing tauhan.",
+                        "Napapahalagahan ang pagmamahal sa pamilya at pagsisisi."
+                    ],
+                    explanation: `
+                        <p class="mb-3">Ang <strong>Ang Ama</strong> ay isang sikat na maikling kuwento na isinalin sa Filipino ni Mauro R. Avena. Ito ay nagpapakita ng realidad ng buhay pamilya, mga pagkakamali ng magulang, at ang kapangyarihan ng pagsisisi.</p>
+                        
+                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl my-4 space-y-2">
+                            <h4 class="font-bold text-slate-800"><i class="fa-solid fa-users text-depedBlue-800 mr-2"></i>Mga Pangunahing Tauhan at Aral:</h4>
+                            <p class="text-xs sm:text-sm text-slate-700"><strong>Ama:</strong> Isang lalaking mabilis magalit kapag nakainom, ngunit sa huli ay nakaramdam ng matinding pagsisisi matapos ang isang malungkot na pangyayari kay Mui Mui.</p>
+                            <p class="text-xs sm:text-sm text-slate-700"><strong>Mui Mui:</strong> Ang batang sakitin na naging dahilan ng pagbabago ng damdamin ng ama.</p>
+                        </div>
+                    `,
+                    mediaType: "video",
+                    videoTitle: "Panoorin: Buod at Pagsusuri sa Kuwentong 'Ang Ama'",
+                    videoEmbedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+                }
+            ],
 
-        const characterDescriptions = [
-            { id: "d1", text: "Isang Amerasian na musikero sa Freedom Pad; may matinding krisis sa identidad at poot sa imperyalismong Amerikano." },
-            { id: "d2", text: "Manggagawang Pilipino sa base militar na tinitiis ang pangaalipusta ngunit namatay nang ipaglaban ang kanyang dangal." },
-            { id: "d3", text: "Isang GRO sa Olongapo na umaasang makakapangasawa ng Amerikano ngunit nabuntis at iniwan ni Steve." },
-            { id: "d4", text: "Isang mayaman at bukas-palad na homosexual na naging biktima ng pagnanakaw at brutal na pagbugbog." },
-            { id: "d5", text: "Amerikanong sundalo na naging kasintahan ni Magda at nagpakita ng panliliit sa mga Pilipino." },
-            { id: "d6", text: "Amerikanong sundalo na nagnakaw at brutal na humagupit kay Ali sa tulong ng kasabwat." },
-            { id: "d7", text: "Ina ni Mike na dating nagtrabaho sa klab, nabuntis at inabandona ng Amerikanong si Michael Taylor Sr." }
-        ];
-
-        // 3. Timeline Ordering Data (5 Events)
-        const timelineEventsMaster = [
-            { id: 1, text: "Pamumuhay ni Mike bilang musikero sa Freedom Pad at ang kanyang pakikipagkaibigan kay Modesto at Ali." },
-            { id: 2, text: "Ang panloloko, pagnanakaw, at brutal na pagbugbog kay Ali ng kasintahang Amerikano na si Johnson." },
-            { id: 3, text: "Ang patuloy na pag-alipusta kay Modesto sa base militar hanggang sa lumaban ito at paslangin ng mga Kano." },
-            { id: 4, text: "Ang pag-iwan ni Steve kay Magda nang malalamang ito ay buntis habang nagpapakita ng kawalan ng galang sa mga Pilipino." },
-            { id: 5, text: "Ang marahas na paghampas ni Mike ng gitara kay Steve na naging dahilan ng kanyang pagkakakulong at paggising ng kamalayan." }
-        ];
-
-        // 4. Flashcards Data (6 Flashcards)
-        const flashcardData = [
-            {
-                title: "Freedom Pad",
-                concept: "Komersyalisasyon at Pagsasamantala",
-                backText: "Isang klab sa Olongapo na nagsisilbing tambayan ng mga sundalong Amerikano. Sumisimbolo sa komersyalisasyon ng aliw at pagbebenta ng sariling kultura at katawan ng mga Pilipino para sa dolyar."
-            },
-            {
-                title: "Base Militar sa Subic",
-                concept: "Neokolonyalismo",
-                backText: "Sumisimbolo sa kawalan ng tunay na kasarinlan at soberanya ng Pilipinas matapos ang Ikalawang Digmaang Pandaigdig. Dito malinaw na makikita ang hindi pantay na pagtrato at kawalan ng katarungan sa mga Pilipino sa sarili nilang bayan."
-            },
-            {
-                title: "Kulay ng Balat / Pagiging Amerasian",
-                concept: "Krisis sa Identidad",
-                backText: "Inilalarawan sa katauhan ni Mike at ng iba pang batang isinilang sa Amerikanong sundalo at Pilipinang ina. Ipinapakita nito ang sugat ng pananakop, pagiging 'anak ng labas' sa sariling bansa, at ang paghahanap ng tunay na pagkakakilanlan."
-            },
-            {
-                title: "Manggagawang Pilipino",
-                concept: "Diskriminasyon at Pangaalipusta",
-                backText: "Inilalarawan sa buhay ni Modesto sa loob ng base militar. Sa kabila ng husay at sipag ng mga Pilipino, itinuturing pa rin silang mababang uri ng mamamayan at walang karapatang lumaban sa mga banyagang superior."
-            },
-            {
-                title: "Kababaihan at GRO",
-                concept: "Eksploytasyon at Maling Pangarap",
-                backText: "Inilalarawan sa buhay ni Magda. Ipinapakita nito ang maling paniniwala na ang pakikipag-isang dibdib sa Amerikano ang tanging susi sa pag-ahon sa kahirapan, na madalas ay nagwawakas sa pag-abandona at pagdurusa."
-            },
-            {
-                title: "Paggising at Nasyonalismo",
-                concept: "Pagbangon at Karangalan",
-                backText: "Ipinakita sa wakas ng nobela sa pamamagitan ng marahas ngunit makabuluhang pagsuway ni Mike kay Steve. Sumisimbolo ito sa pagputol sa tanikala ng pagpapasailalim at pagtanggap sa sariling pagka-Pilipino."
-            }
-        ];
-
-        /* ==========================================================================
-           STATE MANAGEMENT
-           ========================================================================== */
-        let userQuizAnswers = {};
-        let currentSequenceOrder = [];
-
-        /* ==========================================================================
-           INITIALIZATION & NAVIGATION
-           ========================================================================== */
-        window.onload = function() {
-            renderQuiz();
-            renderMatching();
-            initSequence();
-            renderFlashcards();
-            updateCertificateDisplay();
-            setTodayDate();
+            // 3. PAGSUSULIT (QUIZ PAGE - 5 QUESTIONS)
+            quiz: [
+                {
+                    id: 1,
+                    question: "Ilang kabuuang pantig mayroon ang isang tulang Tanka?",
+                    options: [
+                        "A. 17 pantig",
+                        "B. 31 pantig",
+                        "C. 25 pantig",
+                        "D. 12 pantig"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Ang Tanka ay may 5 taludtod na may tiyak na sukat na 5-7-5-7-7, kaya ang kabuuang bilang ng pantig ay 31."
+                },
+                {
+                    id: 2,
+                    question: "Ano ang karaniwang pangunahing paksa o tema ng tulang Haiku?",
+                    options: [
+                        "A. Digmaan at Pulitika",
+                        "B. Kalikasan at Panahon",
+                        "C. Agham at Teknolohiya",
+                        "D. Mitolohiya ng Griyego"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Ang Haiku ay nakatuon sa kalikasan, kapaligiran, at payak na sandali sa buhay."
+                },
+                {
+                    id: 3,
+                    question: "Ilang taludtod (lines) mayroon ang tulang Haiku?",
+                    options: [
+                        "A. 5 taludtod",
+                        "B. 4 taludtod",
+                        "C. 3 taludtod",
+                        "D. 2 taludtod"
+                    ],
+                    correctIndex: 2,
+                    explanation: "Ang Haiku ay binubuo ng 3 taludtod na may sukat na 5-7-5 (kabuuang 17 pantig)."
+                },
+                {
+                    id: 4,
+                    question: "Sino ang nagsalin sa Filipino ng sikat na maikling kuwentong 'Ang Ama'?",
+                    options: [
+                        "A. Jose Rizal",
+                        "B. Mauro R. Avena",
+                        "C. Francisco Balagtas",
+                        "D. Lualhati Bautista"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Si Mauro R. Avena ang nagsalin ng maikling kuwentong 'Ang Ama' sa wikang Filipino."
+                },
+                {
+                    id: 5,
+                    question: "Ano ang tawag sa elemento ng tula na tumutukoy sa bilang ng pantig sa bawat taludtod?",
+                    options: [
+                        "A. Tugma",
+                        "B. Sukat",
+                        "C. Talinghaga",
+                        "D. Kariktan"
+                    ],
+                    correctIndex: 1,
+                    explanation: "Ang 'Sukat' ay ang bilang ng pantig ng mga salita sa bawat taludtod ng tula."
+                }
+            ]
         };
 
-        function switchTab(tabId) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
+        // GLOBAL APP STATE
+        let currentTab = 'home';
+        let currentQuizIndex = 0;
+        let userAnswers = new Array(SITE_DATA.quiz.length).fill(null);
 
-            // Deactivate nav buttons
-            const navBtns = document.querySelectorAll('.nav-btn');
-            navBtns.forEach(btn => btn.classList.remove('active'));
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAnnouncements();
+            renderLessonsDropdown();
+            loadSelectedLesson(SITE_DATA.lessons[0].id);
+            loadQuizQuestion(0);
+        });
 
-            // Show selected tab
-            document.getElementById('tab-' + tabId).classList.add('active');
+        // TAB SWITCHING LOGIC
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Hide all pages
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-lessons').classList.add('hidden');
+            document.getElementById('page-quiz').classList.add('hidden');
 
-            // Find matching nav button
-            const activeBtn = Array.from(navBtns).find(btn => btn.getAttribute('onclick').includes(tabId));
-            if (activeBtn) activeBtn.classList.add('active');
+            // Deactivate tab buttons
+            document.getElementById('tab-home').classList.remove('active');
+            document.getElementById('tab-lessons').classList.remove('active');
+            document.getElementById('tab-quiz').classList.remove('active');
 
-            // Refresh certificate display when switching to certificate tab
-            if(tabId === 'certificate') {
-                updateCertificateDisplay();
-            }
+            // Show selected page
+            document.getElementById(`page-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            window.scrollTo({ top: 300, behavior: 'smooth' });
         }
 
-        function showModal(title, message) {
-            document.getElementById('msg-title').innerText = title;
-            document.getElementById('msg-body').innerText = message;
-            document.getElementById('msg-modal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('msg-modal').style.display = 'none';
-        }
-
-        /* ==========================================================================
-           1. QUIZ FUNCTIONS
-           ========================================================================== */
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
+        // RENDER ANNOUNCEMENTS
+        function renderAnnouncements() {
+            const container = document.getElementById('announcements-container');
+            const countBadge = document.getElementById('announcement-count');
             container.innerHTML = '';
 
-            quizQuestions.forEach((q, index) => {
-                const qCard = document.createElement('div');
-                qCard.className = 'question-card';
-                qCard.id = `q-card-${q.id}`;
+            countBadge.innerText = `${SITE_DATA.announcements.length} na anunsyo`;
 
-                let optionsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    optionsHtml += `
-                        <li class="option-item" id="opt-${q.id}-${optIdx}" onclick="selectQuizOption(${q.id}, ${optIdx})">
-                            <span style="font-weight:bold; min-width: 20px;">${String.fromCharCode(65 + optIdx)}.</span>
-                            <span>${opt}</span>
-                        </li>
-                    `;
-                });
-
-                qCard.innerHTML = `
-                    <div class="question-text">${index + 1}. ${q.question}</div>
-                    <ul class="options-list">
-                        ${optionsHtml}
-                    </ul>
-                    <div class="explanation-box" id="exp-${q.id}">
-                        <strong>Paliwanag:</strong> ${q.explanation}
-                    </div>
-                `;
-
-                container.appendChild(qCard);
-            });
-        }
-
-        function selectQuizOption(questionId, optionIndex) {
-            const question = quizQuestions.find(q => q.id === questionId);
-            if (!question) return;
-
-            // Save user answer
-            userQuizAnswers[questionId] = optionIndex;
-
-            // Highlight chosen option and evaluate immediately
-            const totalOptions = question.options.length;
-            for (let i = 0; i < totalOptions; i++) {
-                const optElement = document.getElementById(`opt-${questionId}-${i}`);
-                optElement.className = 'option-item'; // Reset classes
-
-                if (i === question.correct) {
-                    optElement.classList.add('correct');
-                }
-                if (i === optionIndex && optionIndex !== question.correct) {
-                    optElement.classList.add('wrong');
-                }
-            }
-
-            // Show Explanation Box
-            const expBox = document.getElementById(`exp-${questionId}`);
-            expBox.classList.add('show');
-            if (optionIndex === question.correct) {
-                expBox.className = 'explanation-box show correct-bg';
-            } else {
-                expBox.className = 'explanation-box show wrong-bg';
-            }
-
-            updateQuizScore();
-        }
-
-        function updateQuizScore() {
-            let correctCount = 0;
-            let answeredCount = 0;
-
-            quizQuestions.forEach(q => {
-                if (userQuizAnswers.hasOwnProperty(q.id)) {
-                    answeredCount++;
-                    if (userQuizAnswers[q.id] === q.correct) {
-                        correctCount++;
-                    }
-                }
-            });
-
-            document.getElementById('quiz-score-display').innerText = correctCount;
-            const progressPercent = (answeredCount / quizQuestions.length) * 100;
-            document.getElementById('quiz-progress-bar').style.width = progressPercent + '%';
-
-            if (answeredCount === quizQuestions.length) {
-                document.getElementById('quiz-status-text').innerText = `Natapos na! Ang iyong marka ay ${correctCount}/10.`;
-            } else {
-                document.getElementById('quiz-status-text').innerText = `Nakasagot: ${answeredCount} / 10`;
-            }
-        }
-
-        function resetQuiz() {
-            userQuizAnswers = {};
-            document.getElementById('quiz-score-display').innerText = '0';
-            document.getElementById('quiz-progress-bar').style.width = '0%';
-            document.getElementById('quiz-status-text').innerText = 'Sagutan ang mga tanong sa ibaba.';
-            renderQuiz();
-        }
-
-        /* ==========================================================================
-           2. CHARACTER MATCHING FUNCTIONS
-           ========================================================================== */
-        function renderMatching() {
-            const container = document.getElementById('matching-container');
-            container.innerHTML = '';
-
-            // Shuffle descriptions for matching challenge
-            const shuffledDescs = [...characterDescriptions].sort(() => Math.random() - 0.5);
-
-            charactersData.forEach(char => {
-                const item = document.createElement('div');
-                item.className = 'matching-item';
-
-                let optionsHtml = `<option value="">-- Piliin ang Paglalarawan --</option>`;
-                shuffledDescs.forEach(desc => {
-                    optionsHtml += `<option value="${desc.id}">${desc.text}</option>`;
-                });
-
-                item.innerHTML = `
-                    <div class="character-name">👤 ${char.name}</div>
-                    <select class="matching-select" id="select-char-${char.id}">
-                        ${optionsHtml}
-                    </select>
-                    <span class="feedback-badge" id="badge-char-${char.id}"></span>
-                `;
-
-                container.appendChild(item);
-            });
-        }
-
-        function checkMatchingAnswers() {
-            let score = 0;
-            charactersData.forEach(char => {
-                const selectElem = document.getElementById(`select-char-${char.id}`);
-                const badgeElem = document.getElementById(`badge-char-${char.id}`);
-                const selectedValue = selectElem.value;
-
-                if (selectedValue === char.descId) {
-                    score++;
-                    badgeElem.innerText = "✓ Tama";
-                    badgeElem.className = "feedback-badge correct";
-                } else {
-                    badgeElem.innerText = "✗ Mali";
-                    badgeElem.className = "feedback-badge wrong";
-                }
-            });
-
-            showModal("Resulta sa Pagtatapat-tapat", `Nakuha mo ang markang ${score} / ${charactersData.length} sa gawaing ito!`);
-            updateCertificateDisplay();
-        }
-
-        function getMatchingScore() {
-            let score = 0;
-            charactersData.forEach(char => {
-                const selectElem = document.getElementById(`select-char-${char.id}`);
-                if (selectElem && selectElem.value === char.descId) {
-                    score++;
-                }
-            });
-            return score;
-        }
-
-        function resetMatching() {
-            renderMatching();
-        }
-
-        /* ==========================================================================
-           3. STORY SEQUENCE FUNCTIONS
-           ========================================================================== */
-        function initSequence() {
-            // Scramble initial order
-            currentSequenceOrder = [...timelineEventsMaster].sort(() => Math.random() - 0.5);
-            renderSequence();
-            document.getElementById('sequence-feedback').innerText = '';
-        }
-
-        function renderSequence() {
-            const container = document.getElementById('sequence-container');
-            container.innerHTML = '';
-
-            currentSequenceOrder.forEach((evt, idx) => {
-                const seqItem = document.createElement('div');
-                seqItem.className = 'sequence-item';
-
-                seqItem.innerHTML = `
-                    <div class="sequence-content">
-                        <div class="sequence-num">${idx + 1}</div>
-                        <div class="sequence-text">${evt.text}</div>
-                    </div>
-                    <div class="sequence-actions">
-                        <button class="btn-arrow" onclick="moveSequence(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>⬆️</button>
-                        <button class="btn-arrow" onclick="moveSequence(${idx}, 1)" ${idx === currentSequenceOrder.length - 1 ? 'disabled' : ''}>⬇️</button>
-                    </div>
-                `;
-
-                container.appendChild(seqItem);
-            });
-        }
-
-        function moveSequence(index, direction) {
-            const newIndex = index + direction;
-            if (newIndex < 0 || newIndex >= currentSequenceOrder.length) return;
-
-            // Swap
-            const temp = currentSequenceOrder[index];
-            currentSequenceOrder[index] = currentSequenceOrder[newIndex];
-            currentSequenceOrder[newIndex] = temp;
-
-            renderSequence();
-        }
-
-        function checkSequenceOrder() {
-            let isCorrect = true;
-            let correctPositions = 0;
-
-            currentSequenceOrder.forEach((evt, idx) => {
-                if (evt.id === idx + 1) {
-                    correctPositions++;
-                } else {
-                    isCorrect = false;
-                }
-            });
-
-            const feedbackElem = document.getElementById('sequence-feedback');
-            if (isCorrect) {
-                feedbackElem.style.color = "var(--success-color)";
-                feedbackElem.innerText = "🎉 Tamang-tama! Wastong naisaayos ang lahat ng pangyayari (5/5).";
-            } else {
-                feedbackElem.style.color = "var(--error-color)";
-                feedbackElem.innerText = `May ilang mali sa pagkakasunod-sunod. Wastong posisyon: ${correctPositions} / 5. Subukan muli!`;
-            }
-
-            updateCertificateDisplay();
-        }
-
-        function getSequenceScore() {
-            let score = 0;
-            currentSequenceOrder.forEach((evt, idx) => {
-                if (evt.id === idx + 1) {
-                    score++;
-                }
-            });
-            return score;
-        }
-
-        function resetSequence() {
-            initSequence();
-        }
-
-        /* ==========================================================================
-           4. FLASHCARDS FUNCTIONS
-           ========================================================================== */
-        function renderFlashcards() {
-            const container = document.getElementById('flashcards-container');
-            container.innerHTML = '';
-
-            flashcardData.forEach((fc) => {
+            SITE_DATA.announcements.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'flashcard';
-                card.onclick = function() {
-                    this.classList.toggle('flipped');
-                };
+                card.className = `p-4 rounded-xl border transition-all ${
+                    item.urgent 
+                    ? 'bg-amber-50/60 border-amber-300 shadow-sm' 
+                    : 'bg-white border-slate-200 shadow-sm hover:border-depedBlue-300'
+                }`;
 
                 card.innerHTML = `
-                    <div class="flashcard-inner">
-                        <div class="flashcard-front">
-                            <h3>${fc.title}</h3>
-                            <p style="font-weight: 600; color: var(--accent-gold); font-size: 0.9rem;">${fc.concept}</p>
-                            <span class="flashcard-hint">(I-click upang pakinggan/ipaling)</span>
+                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                        <div class="flex items-center gap-2">
+                            ${item.urgent 
+                                ? '<span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Mahalaga</span>' 
+                                : '<span class="bg-depedBlue-100 text-depedBlue-900 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Pabatid</span>'
+                            }
+                            <h3 class="font-bold text-slate-800 text-sm sm:text-base">${item.title}</h3>
                         </div>
-                        <div class="flashcard-back">
-                            <strong style="margin-bottom:0.4rem; display:block; color:#fde047;">Paliwanag at Simbolismo:</strong>
-                            <p>${fc.backText}</p>
-                        </div>
+                        <span class="text-[11px] text-slate-400 font-medium whitespace-nowrap">${item.date}</span>
                     </div>
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">${item.content}</p>
                 `;
-
                 container.appendChild(card);
             });
         }
 
-        /* ==========================================================================
-           5. CERTIFICATE & SUMMARY FUNCTIONS
-           ========================================================================== */
-        function updateCertificateDisplay() {
-            // Student Info
-            const nameInput = document.getElementById('student-name').value.trim();
-            const sectionInput = document.getElementById('student-section').value.trim();
-
-            document.getElementById('cert-display-name').innerText = nameInput !== '' ? nameInput : '[ Pangalan ng Mag-aaral ]';
-            document.getElementById('cert-display-section').innerText = sectionInput !== '' ? sectionInput : '[ Baitang at Seksiyon ]';
-
-            // Calculate Scores
-            let quizScore = 0;
-            quizQuestions.forEach(q => {
-                if (userQuizAnswers[q.id] === q.correct) quizScore++;
+        // RENDER LESSONS DROPDOWN & DETAIL
+        function renderLessonsDropdown() {
+            const select = document.getElementById('lesson-select');
+            select.innerHTML = '';
+            
+            SITE_DATA.lessons.forEach(lesson => {
+                const opt = document.createElement('option');
+                opt.value = lesson.id;
+                opt.textContent = lesson.title;
+                select.appendChild(opt);
             });
-
-            const matchingScore = getMatchingScore();
-            const sequenceScore = getSequenceScore();
-
-            const totalScore = quizScore + matchingScore + sequenceScore;
-            const maxTotal = 10 + 7 + 5; // 22 total points
-            const percentage = Math.round((totalScore / maxTotal) * 100);
-
-            document.getElementById('cert-quiz-score').innerText = `${quizScore} / 10`;
-            document.getElementById('cert-matching-score').innerText = `${matchingScore} / 7`;
-            document.getElementById('cert-sequence-score').innerText = `${sequenceScore} / 5`;
-            document.getElementById('cert-total-percent').innerText = `${percentage}%`;
         }
 
-        function setTodayDate() {
-            const today = new Date();
-            const formatted = today.toLocaleDateString('tl-PH', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('cert-date').innerText = formatted;
+        function loadSelectedLesson(lessonId) {
+            const lesson = SITE_DATA.lessons.find(l => l.id === lessonId) || SITE_DATA.lessons[0];
+            const container = document.getElementById('lesson-detail-container');
+
+            let objectivesHtml = lesson.objectives.map(obj => `
+                <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
+                    <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                    <span>${obj}</span>
+                </li>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-md p-5 sm:p-7 space-y-6 animate-fade-in">
+                    
+                    <!-- Header Badges -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-depedBlue-900 text-white font-bold text-xs px-3 py-1 rounded-full">${lesson.quarter}</span>
+                            <span class="bg-depedGold-100 text-depedGold-600 font-bold text-xs px-3 py-1 rounded-full">${lesson.category}</span>
+                        </div>
+                        <span class="text-xs text-slate-400 font-medium">Calbayog City National High School</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-depedBlue-900 leading-tight">
+                        ${lesson.title}
+                    </h2>
+
+                    <!-- Objectives Box -->
+                    <div class="bg-depedBlue-50/70 border border-depedBlue-100 p-4 rounded-xl space-y-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-depedBlue-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-bullseye text-depedGold-500"></i>
+                            Mga Layunin sa Pagkatuto:
+                        </h4>
+                        <ul class="space-y-1.5">
+                            ${objectivesHtml}
+                        </ul>
+                    </div>
+
+                    <!-- Detailed Content / Explanation -->
+                    <div class="prose max-w-none text-slate-700 text-xs sm:text-sm leading-relaxed space-y-3">
+                        <h4 class="text-base font-bold text-slate-800 border-b pb-1">Paliwanag at Nilalaman:</h4>
+                        ${lesson.explanation}
+                    </div>
+
+                    <!-- Video Container -->
+                    <div class="space-y-2 pt-4 border-t border-slate-100">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-video text-red-600"></i>
+                            ${lesson.videoTitle || 'Panoorin ang Video sa Aralin'}
+                        </h4>
+                        <div class="relative w-full aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-inner border border-slate-300">
+                            <iframe 
+                                class="w-full h-full" 
+                                src="${lesson.videoEmbedUrl}" 
+                                title="Video Player" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="text-[11px] text-slate-400 text-center italic">Paalala: Siguraduhing may internet connection upang maipalabas ang video sa itaas.</p>
+                    </div>
+
+                </div>
+            `;
         }
 
-        function triggerPrint() {
-            const name = document.getElementById('student-name').value.trim();
-            if(!name) {
-                showModal("Paalala", "Pakiusap, ilagay muna ang iyong kumpletong pangalan bago i-print ang katibayan.");
-                return;
+        // ================= QUIZ ENGINE =================
+        function loadQuizQuestion(index) {
+            currentQuizIndex = index;
+            const q = SITE_DATA.quiz[index];
+            const total = SITE_DATA.quiz.length;
+
+            // UI updates
+            document.getElementById('quiz-progress-text').innerText = `Tanong ${index + 1} sa ${total}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((index + 1) / total) * 100}%`;
+            document.getElementById('quiz-question-text').innerText = `${index + 1}. ${q.question}`;
+
+            // Render Options
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            const selectedAnswer = userAnswers[index];
+
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `w-full text-left p-3.5 rounded-xl border font-medium text-xs sm:text-sm transition-all flex items-center justify-between ${
+                    selectedAnswer === optIdx 
+                    ? 'border-depedBlue-900 bg-depedBlue-50 text-depedBlue-900 font-bold shadow-sm' 
+                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                }`;
+
+                btn.onclick = () => selectOption(optIdx);
+
+                btn.innerHTML = `
+                    <span>${optText}</span>
+                    ${selectedAnswer === optIdx ? '<i class="fa-solid fa-circle-check text-depedBlue-900 text-base"></i>' : '<i class="fa-regular fa-circle text-slate-300 text-base"></i>'}
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Handle Prev/Next Buttons
+            const prevBtn = document.getElementById('btn-prev-question');
+            const nextBtn = document.getElementById('btn-next-question');
+
+            if (index === 0) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
             }
-            window.print();
+
+            if (selectedAnswer !== null) {
+                nextBtn.disabled = false;
+                showFeedbackBox(q, selectedAnswer);
+            } else {
+                nextBtn.disabled = true;
+                hideFeedbackBox();
+            }
+
+            // Change next button text on final question
+            if (index === total - 1) {
+                nextBtn.querySelector('span').innerText = 'Tapusin at Tumingin ng Marka';
+            } else {
+                nextBtn.querySelector('span').innerText = 'Susunod';
+            }
+        }
+
+        function selectOption(optIdx) {
+            userAnswers[currentQuizIndex] = optIdx;
+            const q = SITE_DATA.quiz[currentQuizIndex];
+            
+            // Re-render choices & feedback
+            loadQuizQuestion(currentQuizIndex);
+        }
+
+        function showFeedbackBox(question, userChoice) {
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const badge = document.getElementById('feedback-badge');
+            const explanation = document.getElementById('feedback-explanation');
+
+            feedbackBox.classList.remove('hidden');
+            const isCorrect = userChoice === question.correctIndex;
+
+            if (isCorrect) {
+                feedbackBox.className = "p-4 rounded-xl border text-sm animate-fade-in space-y-1 bg-emerald-50 border-emerald-300 text-emerald-900";
+                badge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Tamang Sagot! Natumbok mo!`;
+            } else {
+                feedbackBox.className = "p-4 rounded-xl border text-sm animate-fade-in space-y-1 bg-rose-50 border-rose-300 text-rose-900";
+                badge.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i> Mali ang napiling sagot.`;
+            }
+
+            explanation.innerText = question.explanation;
+        }
+
+        function hideFeedbackBox() {
+            document.getElementById('quiz-feedback-box').classList.add('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < SITE_DATA.quiz.length - 1) {
+                loadQuizQuestion(currentQuizIndex + 1);
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuizIndex > 0) {
+                loadQuizQuestion(currentQuizIndex - 1);
+            }
+        }
+
+        function showQuizResults() {
+            document.getElementById('quiz-box').classList.add('hidden');
+            const resultsBox = document.getElementById('quiz-results-box');
+            resultsBox.classList.remove('hidden');
+
+            let score = 0;
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            SITE_DATA.quiz.forEach((q, idx) => {
+                const userChoice = userAnswers[idx];
+                const isCorrect = userChoice === q.correctIndex;
+                if (isCorrect) score++;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `p-3 rounded-xl border ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+
+                reviewItem.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-1">${idx + 1}. ${q.question}</p>
+                    <p class="text-xs ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">
+                        <strong>Iyong Sagot:</strong> ${userChoice !== null ? q.options[userChoice] : 'Walang sagot'}
+                    </p>
+                    ${!isCorrect ? `<p class="text-xs text-slate-600 mt-0.5"><strong>Wastong Sagot:</strong> ${q.options[q.correctIndex]}</p>` : ''}
+                    <p class="text-[11px] text-slate-500 mt-1 italic border-t pt-1">${q.explanation}</p>
+                `;
+                reviewList.appendChild(reviewItem);
+            });
+
+            document.getElementById('quiz-final-score').innerText = `${score} / ${SITE_DATA.quiz.length}`;
+
+            const msg = document.getElementById('quiz-score-message');
+            if (score === 5) {
+                msg.innerText = "Napakahusay! Nakuha mo ang perpektong marka!";
+                msg.className = "text-sm font-bold text-emerald-600";
+            } else if (score >= 3) {
+                msg.innerText = "Magaling! Malaki ang iyong naunawaan sa aralin.";
+                msg.className = "text-sm font-bold text-depedBlue-900";
+            } else {
+                msg.innerText = "Maaari mo pang ulitin at basahin ang mga aralin upang lalong matuto.";
+                msg.className = "text-sm font-bold text-amber-600";
+            }
+        }
+
+        function resetQuiz() {
+            userAnswers = new Array(SITE_DATA.quiz.length).fill(null);
+            document.getElementById('quiz-results-box').classList.add('hidden');
+            document.getElementById('quiz-box').classList.remove('hidden');
+            loadQuizQuestion(0);
+        }
+
+        // TEACHER GUIDE MODAL CONTROLS
+        function openTeacherGuideModal() {
+            document.getElementById('teacher-modal').classList.remove('hidden');
+        }
+        function closeTeacherGuideModal() {
+            document.getElementById('teacher-modal').classList.add('hidden');
         }
     </script>
 </body>
